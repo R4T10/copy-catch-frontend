@@ -1,18 +1,15 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <drag-drop-zip></drag-drop-zip>
   </div>
 </template>
-
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import DragDropZip from '@/components/DragDropZip.vue'
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    DragDropZip
   }
 }
 </script>
