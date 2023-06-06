@@ -10,16 +10,16 @@
         id="fileInput"
         class="file-input"
         @change="handleFileSelect"
-        accept=".zip"
       />
     </label>
     <p>Drag and drop a .zip file here or click icon to select a file.</p>
-    <button @click="confirmFile" v-if="selectedFile">Confirm</button>
+    <button @click="confirmFile" v-if="selectedFile">Upload</button>
   </div>
 </template>
 
 <script>
 import FileService from '@/services/FileService.js'
+import Swal from 'sweetalert2'
 export default {
   data() {
     return {
@@ -44,10 +44,28 @@ export default {
         this.selectedFile = file
         this.formData = new FormData()
         this.formData.append('file', file)
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Invalid file type.'
+        })
       }
     },
     confirmFile() {
-      FileService.uploadFile(this.formData)
+      Swal.fire({
+        title: 'Are you sure to confirm this file to check plagarism',
+        showDenyButton: true,
+        confirmButtonText: 'Confirm',
+        denyButtonText: `Cancel`
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire('Upload success', '', 'success')
+          FileService.uploadFile(this.formData)
+        }
+        // else if (result.isDenied) {
+        // }
+      })
     }
   }
 }
