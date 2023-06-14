@@ -15,12 +15,16 @@
     <p>Drag and drop a .zip file here or click icon to select a file.</p>
     <button @click="confirmFile" v-if="selectedFile">Upload</button>
   </div>
+  {{ GStore.result.percentage }}
 </template>
 
 <script>
 import FileService from '@/services/FileService.js'
+import ResultService from '@/services/ResultService.js'
 import Swal from 'sweetalert2'
+import GStore from '@/store'
 export default {
+  inject: ['GStore'],
   data() {
     return {
       selectedFile: null,
@@ -61,15 +65,22 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           Swal.fire({
-            title: 'Uploading',
+            title: 'Processing',
             html: 'Please wait',
             didOpen: () => {
               Swal.showLoading()
               FileService.uploadFile(this.formData)
                 .then((response) => {
                   if (response.status == 200) {
-                    Swal.hideLoading() // Close the loading spinner
-                    Swal.fire('Upload success', '', 'success')
+                    // setTimeout(() => {
+                    ResultService.tableResult().then((response) => {
+                      GStore.result = response.data
+                      if (response.status == 200) {
+                        Swal.hideLoading() // Close the loading spinner
+                        Swal.fire('Upload success', '', 'success')
+                      }
+                    })
+                    // }, 1000)
                   } else {
                     Swal.hideLoading() // Close the loading spinner
                     Swal.fire('Upload failed', '', 'error')
