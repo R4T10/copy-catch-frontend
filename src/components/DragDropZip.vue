@@ -68,15 +68,15 @@ export default {
               FileService.uploadFile(this.formData)
                 .then((response) => {
                   if (response.status == 200) {
-                    Swal.hideLoading() // Close the loading spinner
+                    Swal.hideLoading()
                     Swal.fire('Upload success', '', 'success')
                   } else {
-                    Swal.hideLoading() // Close the loading spinner
+                    Swal.hideLoading()
                     Swal.fire('Upload failed', '', 'error')
                   }
                 })
                 .catch((error) => {
-                  Swal.hideLoading() // Close the loading spinner
+                  Swal.hideLoading()
                   Swal.fire('Error', error.message, 'error')
                 })
             }
