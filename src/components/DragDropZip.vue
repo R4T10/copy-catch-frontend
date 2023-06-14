@@ -60,8 +60,27 @@ export default {
         denyButtonText: `Cancel`
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire('Upload success', '', 'success')
-          FileService.uploadFile(this.formData)
+          Swal.fire({
+            title: 'Uploading',
+            html: 'Please wait',
+            didOpen: () => {
+              Swal.showLoading()
+              FileService.uploadFile(this.formData)
+                .then((response) => {
+                  if (response.status == 200) {
+                    Swal.hideLoading() // Close the loading spinner
+                    Swal.fire('Upload success', '', 'success')
+                  } else {
+                    Swal.hideLoading() // Close the loading spinner
+                    Swal.fire('Upload failed', '', 'error')
+                  }
+                })
+                .catch((error) => {
+                  Swal.hideLoading() // Close the loading spinner
+                  Swal.fire('Error', error.message, 'error')
+                })
+            }
+          })
         }
         // else if (result.isDenied) {
         // }
