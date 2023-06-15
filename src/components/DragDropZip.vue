@@ -49,11 +49,7 @@ export default {
         this.formData = new FormData()
         this.formData.append('file', file)
       } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Invalid file type.'
-        })
+        Swal.fire('Invalid file type', '', 'error')
       }
     },
     confirmFile() {
@@ -86,9 +82,9 @@ export default {
                     Swal.fire('Upload failed', '', 'error')
                   }
                 })
-                .catch((error) => {
-                  Swal.hideLoading() // Close the loading spinner
-                  Swal.fire('Error', error.message, 'error')
+                .catch(() => {
+                  Swal.hideLoading()
+                  Swal.fire('Invalid file format', '', 'warning')
                 })
             }
           })
