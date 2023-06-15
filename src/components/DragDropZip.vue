@@ -68,7 +68,6 @@ export default {
               FileService.uploadFile(this.formData)
                 .then((response) => {
                   if (response.status == 200) {
-                    // setTimeout(() => {
                     ResultService.tableResult().then((response) => {
                       GStore.result = response.data
                       if (response.status == 200) {
@@ -76,10 +75,6 @@ export default {
                         Swal.fire('Upload success', '', 'success')
                       }
                     })
-                    // }, 1000)
-                  } else {
-                    Swal.hideLoading() // Close the loading spinner
-                    Swal.fire('Upload failed', '', 'error')
                   }
                 })
                 .catch(() => {
