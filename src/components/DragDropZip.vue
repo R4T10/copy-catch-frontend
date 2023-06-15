@@ -45,11 +45,7 @@ export default {
         this.formData = new FormData()
         this.formData.append('file', file)
       } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Invalid file type.'
-        })
+        Swal.fire('Invalid file type', '', 'error')
       }
     },
     confirmFile() {
@@ -70,14 +66,11 @@ export default {
                   if (response.status == 200) {
                     Swal.hideLoading()
                     Swal.fire('Upload success', '', 'success')
-                  } else {
-                    Swal.hideLoading()
-                    Swal.fire('Upload failed', '', 'error')
                   }
                 })
-                .catch((error) => {
+                .catch(() => {
                   Swal.hideLoading()
-                  Swal.fire('Error', error.message, 'error')
+                  Swal.fire('Invalid file format', '', 'warning')
                 })
             }
           })
