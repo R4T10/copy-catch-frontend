@@ -15,7 +15,6 @@
     <p>Drag and drop a .zip file here or click icon to select a file.</p>
     <button @click="confirmFile" v-if="selectedFile">Upload</button>
   </div>
-  {{ GStore.result.percentage }}
 </template>
 
 <script>
@@ -73,6 +72,10 @@ export default {
                       if (response.status == 200) {
                         Swal.hideLoading() // Close the loading spinner
                         Swal.fire('Upload success', '', 'success')
+                        setTimeout(
+                          () => this.$router.push({ path: '/table' }),
+                          3000
+                        )
                       }
                     })
                   }
