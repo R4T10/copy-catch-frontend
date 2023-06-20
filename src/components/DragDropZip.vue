@@ -45,7 +45,7 @@ export default {
     },
     handleFiles(files) {
       const file = files[0]
-      if (file && file.type === 'application/zip') {
+      if (file && file.name.endsWith('.zip')) {
         this.selectedFile = file
         this.formData = new FormData()
         this.formData.append('file', file)
