@@ -17,7 +17,6 @@
       Upload
     </button>
   </div>
-  {{ GStore.result.percentage }}
 </template>
 
 <script>
