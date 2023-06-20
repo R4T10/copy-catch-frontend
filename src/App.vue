@@ -1,18 +1,33 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <!-- <nav>
+    <router-link to="/">Students</router-link> |
+    <router-link to="/about">Google Search</router-link>
+  </nav> -->
+
+  <h1></h1>
   <router-view />
 </template>
 
 <style>
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+h1 {
+  width: 100%;
+  height: 80px;
+  background: rgb(34, 193, 92);
+  margin: 0 0 100px;
 }
 
 nav {

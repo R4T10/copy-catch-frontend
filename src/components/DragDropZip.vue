@@ -1,7 +1,7 @@
 <template>
   <div class="drag-drop-zone" @drop="handleDrop" @dragover.prevent>
     <div>
-      <span v-if="selectedFile">{{ selectedFile.name }}</span>
+      <span v-if="selectedFile" id="file">[{{ selectedFile.name }}]</span>
     </div>
     <label for="fileInput">
       <img class="image-icon" src="@/assets/upload.png" alt="Selected File" />
@@ -12,9 +12,12 @@
         @change="handleFileSelect"
       />
     </label>
-    <p>Drag and drop a .zip file here or click icon to select a file.</p>
-    <button @click="confirmFile" v-if="selectedFile">Upload</button>
+    <p>Drag and drop a .zip file here or click icon to select a file</p>
+    <button @click="confirmFile" v-if="selectedFile" id="uploadbtn">
+      Upload
+    </button>
   </div>
+  {{ GStore.result.percentage }}
 </template>
 
 <script>
@@ -43,7 +46,7 @@ export default {
     },
     handleFiles(files) {
       const file = files[0]
-      if (file && file.type === 'application/x-zip-compressed') {
+      if (file && file.type === 'application/zip') {
         this.selectedFile = file
         this.formData = new FormData()
         this.formData.append('file', file)
@@ -53,7 +56,7 @@ export default {
     },
     confirmFile() {
       Swal.fire({
-        title: 'Are you sure to confirm this file to check plagarism',
+        title: 'Are you sure to confirm this file to check plagarism?',
         showDenyButton: true,
         confirmButtonText: 'Confirm',
         denyButtonText: `Cancel`
@@ -61,7 +64,7 @@ export default {
         if (result.isConfirmed) {
           Swal.fire({
             title: 'Processing',
-            html: 'Please wait',
+            html: '',
             didOpen: () => {
               Swal.showLoading()
               FileService.uploadFile(this.formData)
@@ -98,8 +101,9 @@ export default {
 <style scoped>
 .drag-drop-zone {
   border: 2px dashed #ccc;
-  padding: 20px;
-  margin: auto;
+  padding: 150px;
+  margin: 0 40px;
+  background: rgb(245, 250, 247);
 }
 .file-input-label {
   display: inline-block;
@@ -113,5 +117,18 @@ export default {
 .image-icon {
   width: 100px;
   height: 100px;
+  padding: 10px;
+}
+#uploadbtn {
+  width: 100px;
+  height: 30px;
+  color: white;
+  background: blue;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+}
+#file {
+  font-weight: bold;
 }
 </style>
