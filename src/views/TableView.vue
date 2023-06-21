@@ -28,11 +28,11 @@ export default {
 <style scoped>
 table {
   margin: auto;
-  margin-top: 50px;
+  margin-bottom: 100px;
 }
 
 th {
-  background: #161240;
+  background: rgb(43, 43, 238);
   color: #eff9fe;
   font-weight: 100;
   text-align: center;
@@ -41,7 +41,7 @@ th {
 table,
 th,
 td {
-  padding: 10px;
+  padding: 10px 15px;
 }
 
 tr {
