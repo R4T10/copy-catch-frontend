@@ -72,12 +72,17 @@ export default {
                     ResultService.tableResult().then((response) => {
                       GStore.result = response.data
                       if (response.status == 200) {
-                        Swal.hideLoading() // Close the loading spinner
-                        Swal.fire('Upload success', '', 'success')
-                        setTimeout(
-                          () => this.$router.push({ path: '/table' }),
-                          3000
-                        )
+                        ResultService.google_tableResult().then((response) => {
+                          GStore.google_result = response.data
+                          if (response.status == 200) {
+                            Swal.hideLoading() // Close the loading spinner
+                            Swal.fire('Upload success', '', 'success')
+                            setTimeout(
+                              () => this.$router.push({ path: '/table' }),
+                              2000
+                            )
+                          }
+                        })
                       }
                     })
                   }

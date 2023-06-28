@@ -4,7 +4,7 @@
   <table>
     <tr>
       <th></th>
-      <th v-for="question in GStore.result.question" :key="question">
+      <th v-for="question in GStore.google_result.question" :key="question">
         {{ question }}
       </th>
     </tr>
@@ -14,7 +14,7 @@
         {{ percentage }}
       </td>
     </tr> -->
-    <tr v-for="result in GStore.result.data" :key="result">
+    <tr v-for="result in GStore.google_result.data" :key="result">
       <td>{{ result.student_id }}</td>
       <td v-for="percentage in result.answers" :key="percentage">
         {{ percentage }}
