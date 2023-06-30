@@ -26,8 +26,8 @@ body {
 h1 {
   width: 100%;
   height: 80px;
-  background: rgb(34, 193, 92);
-  margin: 0 0 100px;
+  background: #04724d;
+  margin: 0 0 80px;
 }
 
 nav {

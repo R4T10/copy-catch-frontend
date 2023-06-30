@@ -1,6 +1,10 @@
 <template>
-  <button @click="go_to_student" id="uploadbtn">Student</button>
-  <button @click="go_to_google" id="uploadbtn">Google</button>
+  <div class="navbtn">
+    <button disabled @click="go_to_student" id="uploadbtn" style="color: black">
+      Student
+    </button>
+    <button @click="go_to_google" id="uploadbtn">Google Search</button>
+  </div>
   <table>
     <tr>
       <th></th>
@@ -39,25 +43,32 @@ export default {
 table {
   margin: auto;
   margin-bottom: 100px;
+  padding-top: 30px;
 }
 
 th {
-  background: rgb(43, 43, 238);
-  color: #eff9fe;
+  background: #072a6c;
+  color: white;
   font-weight: 100;
   text-align: center;
 }
-#uploadbtn {
-  width: 100px;
-  height: 30px;
-  color: white;
-  background: blue;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
+
+.navbtn {
+  position: absolute;
+  top: 70;
+  right: 0;
 }
 
-table,
+#uploadbtn {
+  width: 150px;
+  height: 30px;
+  color: white;
+  background: #04724d;
+  border: none;
+  font-weight: bold;
+  margin-left: 2px;
+}
+
 th,
 td {
   padding: 10px 15px;
@@ -65,6 +76,6 @@ td {
 
 tr {
   border-top: 1px solid #161240;
-  background: #eff9fe;
+  background: rgb(245, 250, 247);
 }
 </style>
