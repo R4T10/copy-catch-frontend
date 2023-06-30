@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import TableView from '../views/TableView.vue'
-import TableGoogleView from '../views/TableGoogleView.vue'
 const routes = [
   {
     path: '/',
@@ -21,11 +20,6 @@ const routes = [
     path: '/table',
     name: 'table',
     component: TableView
-  },
-  {
-    path: '/google_table',
-    name: 'google_table',
-    component: TableGoogleView
   }
 ]
 

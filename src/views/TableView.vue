@@ -1,24 +1,33 @@
 <template>
   <div class="navbtn">
-    <button disabled @click="go_to_student" id="uploadbtn" style="color: black">
+    <button @click="go_to_student" id="uploadbtn" style="color: black">
       Student
     </button>
     <button @click="go_to_google" id="uploadbtn">Google Search</button>
   </div>
-  <table>
+  <table v-if="table_student">
     <tr>
       <th></th>
       <th v-for="question in GStore.result.question" :key="question">
         {{ question }}
       </th>
     </tr>
-    <!-- <tr v-for="result in GStore.result.data" :key="result">
+    <tr v-for="result in GStore.result.data" :key="result">
       <td>{{ result.student_id }}</td>
       <td v-for="percentage in result.answers" :key="percentage">
         {{ percentage }}
       </td>
-    </tr> -->
-    <tr v-for="result in GStore.result.data" :key="result">
+    </tr>
+  </table>
+
+  <table v-if="table_google">
+    <tr>
+      <th></th>
+      <th v-for="question in GStore.google_result.question" :key="question">
+        {{ question }}
+      </th>
+    </tr>
+    <tr v-for="result in GStore.google_result.data" :key="result">
       <td>{{ result.student_id }}</td>
       <td v-for="percentage in result.answers" :key="percentage">
         {{ percentage }}
@@ -29,12 +38,20 @@
 <script>
 export default {
   inject: ['GStore'],
+  data() {
+    return {
+      table_student: true,
+      table_google: false
+    }
+  },
   methods: {
     go_to_student() {
-      this.$router.push({ path: '/table' })
+      this.table_student = true
+      this.table_google = false
     },
     go_to_google() {
-      this.$router.push({ path: '/google_table' })
+      this.table_student = false
+      this.table_google = true
     }
   }
 }
