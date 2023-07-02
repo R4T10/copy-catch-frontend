@@ -1,39 +1,41 @@
 <template>
+  <h2 v-if="table_student">Student</h2>
+  <h2 v-if="table_google">Google Search</h2>
   <div class="navbtn">
-    <button @click="go_to_student" id="uploadbtn" style="color: black">
-      Student
-    </button>
+    <button @click="go_to_student" id="uploadbtn">Student</button>
     <button @click="go_to_google" id="uploadbtn">Google Search</button>
   </div>
-  <table v-if="table_student">
-    <tr>
-      <th></th>
-      <th v-for="question in GStore.result.question" :key="question">
-        {{ question }}
-      </th>
-    </tr>
-    <tr v-for="result in GStore.result.data" :key="result">
-      <td>{{ result.student_id }}</td>
-      <td v-for="percentage in result.answers" :key="percentage">
-        {{ percentage }}
-      </td>
-    </tr>
-  </table>
+  <div class="scrolltable">
+    <table v-if="table_student">
+      <tr>
+        <th></th>
+        <th v-for="question in GStore.result.question" :key="question">
+          {{ question }}
+        </th>
+      </tr>
+      <tr v-for="result in GStore.result.data" :key="result">
+        <td>{{ result.student_id }}</td>
+        <td v-for="percentage in result.answers" :key="percentage">
+          {{ percentage }}
+        </td>
+      </tr>
+    </table>
 
-  <table v-if="table_google">
-    <tr>
-      <th></th>
-      <th v-for="question in GStore.google_result.question" :key="question">
-        {{ question }}
-      </th>
-    </tr>
-    <tr v-for="result in GStore.google_result.data" :key="result">
-      <td>{{ result.student_id }}</td>
-      <td v-for="percentage in result.answers" :key="percentage">
-        {{ percentage }}
-      </td>
-    </tr>
-  </table>
+    <table v-if="table_google">
+      <tr>
+        <th></th>
+        <th v-for="question in GStore.google_result.question" :key="question">
+          {{ question }}
+        </th>
+      </tr>
+      <tr v-for="result in GStore.google_result.data" :key="result">
+        <td>{{ result.student_id }}</td>
+        <td v-for="percentage in result.answers" :key="percentage">
+          {{ percentage }}
+        </td>
+      </tr>
+    </table>
+  </div>
 </template>
 <script>
 export default {
@@ -57,10 +59,18 @@ export default {
 }
 </script>
 <style scoped>
+h2 {
+  margin: 0 0 40px;
+}
+
+.scrolltable {
+  height: 620px;
+  overflow-y: scroll;
+}
+
 table {
+  width: 100%;
   margin: auto;
-  margin-bottom: 100px;
-  padding-top: 30px;
 }
 
 th {
@@ -68,12 +78,14 @@ th {
   color: white;
   font-weight: 100;
   text-align: center;
+  position: sticky;
+  top: 0;
 }
 
 .navbtn {
-  position: absolute;
-  top: 70;
-  right: 0;
+  position: fixed;
+  right: 2px;
+  top: 223px;
 }
 
 #uploadbtn {
