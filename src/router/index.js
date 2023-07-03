@@ -1,11 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import TableView from '../views/TableView.vue'
+import CourseService from '@/services/CourseService'
+import UploadView from '../views/UploadView.vue'
+import GStore from '@/store'
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    beforeEnter: () => {
+      return CourseService.get_course().then((response) => {
+        GStore.course = response.data
+      })
+    }
   },
   {
     path: '/about',
@@ -17,9 +25,27 @@ const routes = [
       import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: '/table',
+    path: '/table/:id',
     name: 'table',
-    component: TableView
+    props: true,
+    component: TableView,
+    beforeEnter: (to, from, next) => {
+      console.log('--this go to table--')
+      GStore.detail = GStore.course.find(
+        (itemInArray) => itemInArray.id == to.params.id
+      )
+      if (GStore.detail.file == false) {
+        next('/upload')
+      } else {
+        next()
+      }
+    }
+  },
+  {
+    path: '/upload',
+    name: 'UploadView',
+    component: UploadView,
+    props: true
   }
 ]
 

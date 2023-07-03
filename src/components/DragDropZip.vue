@@ -21,7 +21,7 @@
 
 <script>
 import FileService from '@/services/FileService.js'
-import ResultService from '@/services/ResultService.js'
+// import ResultService from '@/services/ResultService.js'
 import Swal from 'sweetalert2'
 import GStore from '@/store'
 export default {
@@ -49,6 +49,7 @@ export default {
         this.selectedFile = file
         this.formData = new FormData()
         this.formData.append('file', file)
+        this.formData.append('id', GStore.detail.id)
       } else {
         Swal.fire('Invalid file type', '', 'error')
       }
@@ -68,24 +69,24 @@ export default {
               Swal.showLoading()
               FileService.uploadFile(this.formData)
                 .then((response) => {
-                  if (response.status == 200) {
-                    ResultService.tableResult().then((response) => {
-                      GStore.result = response.data
-                      if (response.status == 200) {
-                        ResultService.google_tableResult().then((response) => {
-                          GStore.google_result = response.data
-                          if (response.status == 200) {
-                            Swal.hideLoading() // Close the loading spinner
-                            Swal.fire('Upload success', '', 'success')
-                            setTimeout(
-                              () => this.$router.push({ path: '/table' }),
-                              2000
-                            )
-                          }
-                        })
-                      }
-                    })
-                  }
+                  //   if (response.status == 200) {
+                  //     ResultService.tableResult().then((response) => {
+                  //       GStore.result = response.data
+                  //       if (response.status == 200) {
+                  //         ResultService.google_tableResult().then((response) => {
+                  //           GStore.google_result = response.data
+                  //           if (response.status == 200) {
+                  console.log(response.data)
+                  console.log(this.formData)
+                  Swal.hideLoading() // Close the loading spinner
+                  Swal.fire('Upload success', '', 'success')
+                  this.$router.push({ path: '/' })
+                  // setTimeout(() => )
+                  //           }
+                  //         })
+                  //       }
+                  //     })
+                  //   }
                 })
                 .catch(() => {
                   Swal.hideLoading()

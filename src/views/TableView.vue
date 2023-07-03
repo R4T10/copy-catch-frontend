@@ -5,7 +5,7 @@
     </button>
     <button @click="go_to_google" id="uploadbtn">Google Search</button>
   </div>
-  <table v-if="table_student">
+  <table v-if="table_student && GStore.result != null">
     <tr>
       <th></th>
       <th v-for="question in GStore.result.question" :key="question">
@@ -19,7 +19,7 @@
       </td>
     </tr>
   </table>
-
+  <!-- 
   <table v-if="table_google">
     <tr>
       <th></th>
@@ -33,9 +33,12 @@
         {{ percentage }}
       </td>
     </tr>
-  </table>
+  </table> -->
 </template>
 <script>
+import Swal from 'sweetalert2'
+import ResultService from '@/services/ResultService.js'
+import GStore from '@/store'
 export default {
   inject: ['GStore'],
   data() {
@@ -53,6 +56,22 @@ export default {
       this.table_student = false
       this.table_google = true
     }
+  },
+  beforeRouteEnter() {
+    Swal.fire({
+      title: 'Processing',
+      html: '',
+      didOpen: () => {
+        Swal.showLoading()
+        ResultService.tableResult(GStore.detail.id).then((response) => {
+          GStore.result = response.data
+          if (response.status === 200) {
+            Swal.hideLoading() // Close the loading spinner
+            Swal.fire('Compare success', '', 'success')
+          }
+        })
+      }
+    })
   }
 }
 </script>

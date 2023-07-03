@@ -1,25 +1,44 @@
 <template>
-  <div class="home">
-    <button @click="showForm">Adding Course</button>
-  </div>
-  <CourseBlog v-for="detail in GStore.course" :key="detail.id" :detail="detail">
-  </CourseBlog>
+  <router-link
+    :to="{
+      name: 'table',
+      params: { id: detail.id }
+    }"
+  >
+    <div class="block">
+      <span>
+        Course ID: {{ detail.course_id }} Course Name:
+        {{ detail.course_name }} Examination: {{ detail.examination }} Year:
+        {{ detail.year }} Professor: {{ detail.professor }}
+      </span>
+    </div>
+  </router-link>
+  <button @click="showForm">Edit detail</button>
+  <button @click="deleteCourse">Delete</button>
 </template>
 
 <script>
-import Swal from 'sweetalert2'
 import CourseService from '@/services/CourseService'
-import CourseBlog from '@/components/ฺCourseBlog.vue'
+import Swal from 'sweetalert2'
 export default {
-  name: 'HomeView',
   inject: ['GStore'],
-  components: {
-    CourseBlog
+  name: 'CourseBlog',
+  props: {
+    detail: {
+      type: Object,
+      required: true
+    }
   },
   methods: {
+    deleteCourse() {
+      const formData = new FormData()
+      formData.append('id', this.detail.id)
+      CourseService.delete_course(formData)
+      location.reload()
+    },
     showForm() {
       Swal.fire({
-        title: 'Adding Course',
+        title: 'Edit Course',
         html: `
           <input id="course_id" class="swal2-input" placeholder="Course ID">
           <input id="course_name" class="swal2-input" placeholder="Course Name">
@@ -60,6 +79,7 @@ export default {
           const { course_id, course_name, year, examination, professor } =
             result.value
           this.submitCourse(
+            this.detail.id,
             course_id,
             course_name,
             year,
@@ -69,8 +89,9 @@ export default {
         }
       })
     },
-    submitCourse(course_id, course_name, year, examination, professor) {
+    submitCourse(id, course_id, course_name, year, examination, professor) {
       const formData = {
+        id,
         course_id,
         course_name,
         year,
@@ -78,15 +99,31 @@ export default {
         professor
       }
       // console.log(formData)
-      CourseService.add_course(formData)
+      CourseService.edit_course(formData)
         .then(() => {
           location.reload()
         })
         .catch((error) => {
-          Swal.fire('Error', 'Failed to add course', 'error')
+          Swal.fire('Error', 'Failed to edit course', 'error')
           console.error(error)
         })
     }
   }
 }
 </script>
+
+<style scoped>
+.block {
+  outline-style: solid;
+  margin-bottom: 50px;
+  height: 50px;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+span {
+  margin: auto;
+}
+</style>
