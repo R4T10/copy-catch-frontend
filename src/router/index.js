@@ -35,17 +35,23 @@ const routes = [
         (itemInArray) => itemInArray.id == to.params.id
       )
       if (GStore.detail.file == false) {
-        next('/upload')
+        next('/upload/' + to.params.id)
       } else {
         next()
       }
     }
   },
   {
-    path: '/upload',
+    path: '/upload/:id',
     name: 'UploadView',
     component: UploadView,
-    props: true
+    props: true,
+    beforeEnter: (to) => {
+      console.log(to.params.id)
+      GStore.detail = GStore.course.find(
+        (itemInArray) => itemInArray.id == to.params.id
+      )
+    }
   }
 ]
 
