@@ -22,6 +22,7 @@
 <script>
 import FileService from '@/services/FileService.js'
 // import ResultService from '@/services/ResultService.js'
+import router from '../router'
 import Swal from 'sweetalert2'
 import GStore from '@/store'
 export default {
@@ -67,31 +68,35 @@ export default {
             html: '',
             didOpen: () => {
               Swal.showLoading()
-              FileService.uploadFile(this.formData)
-                .then((response) => {
-                  //   if (response.status == 200) {
-                  //     ResultService.tableResult().then((response) => {
-                  //       GStore.result = response.data
-                  //       if (response.status == 200) {
-                  //         ResultService.google_tableResult().then((response) => {
-                  //           GStore.google_result = response.data
-                  //           if (response.status == 200) {
-                  console.log(response.data)
-                  console.log(this.formData)
-                  Swal.hideLoading() // Close the loading spinner
-                  Swal.fire('Upload success', '', 'success')
-                  this.$router.push({ path: '/' })
-                  // setTimeout(() => )
-                  //           }
-                  //         })
-                  //       }
-                  //     })
-                  //   }
-                })
-                .catch(() => {
-                  Swal.hideLoading()
-                  Swal.fire('Invalid file format', '', 'warning')
-                })
+              if (GStore.detail.file == false) {
+                FileService.uploadFile(this.formData)
+                  .then((response) => {
+                    console.log(response.data)
+                    console.log(this.formData)
+                    Swal.hideLoading()
+                    Swal.fire('Upload success', '', 'success')
+                    router.push({ path: '/' })
+                  })
+                  .catch(() => {
+                    Swal.hideLoading()
+                    Swal.fire('Invalid file format', '', 'warning')
+                  })
+              }
+              if (GStore.detail.file == true) {
+                console.log(GStore.detail)
+                FileService.reuploadFile(this.formData)
+                  .then((response) => {
+                    console.log(response.data)
+                    console.log(this.formData)
+                    Swal.hideLoading()
+                    Swal.fire('Re-upload success', '', 'success')
+                    router.push({ path: '/' })
+                  })
+                  .catch(() => {
+                    Swal.hideLoading()
+                    Swal.fire('Invalid file format', '', 'warning')
+                  })
+              }
             }
           })
         }

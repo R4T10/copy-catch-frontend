@@ -15,11 +15,13 @@
   </router-link>
   <button @click="showForm">Edit detail</button>
   <button @click="deleteCourse">Delete</button>
+  <button @click="reUploadFile">Reupload file</button>
 </template>
 
 <script>
 import CourseService from '@/services/CourseService'
 import Swal from 'sweetalert2'
+import router from '../router'
 export default {
   inject: ['GStore'],
   name: 'CourseBlog',
@@ -35,6 +37,18 @@ export default {
       formData.append('id', this.detail.id)
       CourseService.delete_course(formData)
       location.reload()
+    },
+    reUploadFile() {
+      Swal.fire({
+        title: 'Are you sure to reupload the file?',
+        showDenyButton: true,
+        confirmButtonText: 'Confirm',
+        denyButtonText: `Cancel`
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push({ name: 'UploadView', params: { id: this.detail.id } })
+        }
+      })
     },
     showForm() {
       Swal.fire({
