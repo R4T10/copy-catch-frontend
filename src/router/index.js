@@ -30,6 +30,7 @@ const routes = [
     props: true,
     component: TableView,
     beforeEnter: (to, from, next) => {
+      GStore.result = null
       console.log('--this go to table--')
       GStore.detail = GStore.course.find(
         (itemInArray) => itemInArray.id == to.params.id
