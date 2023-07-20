@@ -45,13 +45,13 @@ export default {
     },
     handleFiles(files) {
       const file = files[0]
-      if (file && file.name.endsWith('.zip')) {
-        this.selectedFile = file
-        this.formData = new FormData()
-        this.formData.append('file', file)
-      } else {
-        Swal.fire('Invalid file type', '', 'error')
-      }
+      // if (file && file.name.endsWith('.zip')) {
+      this.selectedFile = file
+      this.formData = new FormData()
+      this.formData.append('file', file)
+      // } else {
+      // Swal.fire('Invalid file type', '', 'error')
+      // }
     },
     confirmFile() {
       Swal.fire({
@@ -66,31 +66,32 @@ export default {
             html: '',
             didOpen: () => {
               Swal.showLoading()
-              FileService.uploadFile(this.formData)
-                .then((response) => {
-                  if (response.status == 200) {
-                    ResultService.tableResult().then((response) => {
-                      GStore.result = response.data
-                      if (response.status == 200) {
-                        ResultService.google_tableResult().then((response) => {
-                          GStore.google_result = response.data
-                          if (response.status == 200) {
-                            Swal.hideLoading() // Close the loading spinner
-                            Swal.fire('Upload success', '', 'success')
-                            setTimeout(
-                              () => this.$router.push({ path: '/table' }),
-                              2000
-                            )
-                          }
-                        })
+              FileService.uploadFile(this.formData).then((response) => {
+                console.log(response.data.message)
+                if (response.data.message == 'Upload successful') {
+                  ResultService.tableResult().then((response) => {
+                    GStore.result = response.data
+                    if (response.status == 200) {
+                      ResultService.google_tableResult().then((response) => {
+                        GStore.google_result = response.data
+                        if (response.status == 200) {
+                      Swal.hideLoading() // Close the loading spinner
+                      Swal.fire('Upload success', '', 'success')
+                      setTimeout(
+                        () => this.$router.push({ path: '/table' }),
+                        2000
+                      )
                       }
-                    })
-                  }
-                })
-                .catch(() => {
+                      })
+                    }
+                  })
+                } else if (response.data.message == 'Invalid format') {
                   Swal.hideLoading()
                   Swal.fire('Invalid file format', '', 'warning')
-                })
+                } else {
+                  Swal.fire('Invalid file type', '', 'error')
+                }
+              })
             }
           })
         }
