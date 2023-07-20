@@ -1,8 +1,9 @@
 <template>
   <div class="home">
+    <input type="text" v-model="searchQuery" placeholder="Enter search query" />
     <button @click="showForm">Adding Course</button>
   </div>
-  <CourseBlog v-for="detail in GStore.course" :key="detail.id" :detail="detail">
+  <CourseBlog v-for="detail in filteredData" :key="detail.id" :detail="detail">
   </CourseBlog>
 </template>
 
@@ -13,8 +14,30 @@ import CourseBlog from '@/components/ฺCourseBlog.vue'
 export default {
   name: 'HomeView',
   inject: ['GStore'],
+  data() {
+    return {
+      searchQuery: ''
+    }
+  },
   components: {
     CourseBlog
+  },
+  computed: {
+    filteredData() {
+      const query = this.searchQuery.toLowerCase().trim()
+      if (!query) {
+        return this.GStore.course
+      } else {
+        return this.GStore.course.filter((item) => {
+          return (
+            item.course_id.toLowerCase().includes(query) ||
+            item.course_name.toLowerCase().includes(query) ||
+            item.examination.toLowerCase().includes(query) ||
+            item.year.toLowerCase().includes(query)
+          )
+        })
+      }
+    }
   },
   methods: {
     showForm() {

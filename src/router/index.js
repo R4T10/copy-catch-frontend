@@ -12,6 +12,7 @@ const routes = [
     beforeEnter: () => {
       return CourseService.get_course().then((response) => {
         GStore.course = response.data
+        console.log(GStore.course)
       })
     }
   },

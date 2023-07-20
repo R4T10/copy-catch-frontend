@@ -22,6 +22,7 @@
 <script>
 import FileService from '@/services/FileService.js'
 // import ResultService from '@/services/ResultService.js'
+import CourseService from '@/services/CourseService'
 import router from '../router'
 import Swal from 'sweetalert2'
 import GStore from '@/store'
@@ -69,13 +70,26 @@ export default {
             didOpen: () => {
               Swal.showLoading()
               if (GStore.detail.file == false) {
+                console.log(GStore.detail)
                 FileService.uploadFile(this.formData)
                   .then((response) => {
                     console.log(response.data)
                     console.log(this.formData)
                     Swal.hideLoading()
                     Swal.fire('Upload success', '', 'success')
-                    router.push({ path: '/' })
+                    CourseService.get_course()
+                      .then((response) => {
+                        GStore.course = response.data
+                        console.log(GStore.course)
+                        console.log(GStore.detail)
+                        router.push({
+                          name: 'table',
+                          params: { id: GStore.detail.id }
+                        })
+                      })
+                      .catch((error) => {
+                        console.error('Failed to fetch course data:', error)
+                      })
                   })
                   .catch(() => {
                     Swal.hideLoading()
@@ -90,7 +104,19 @@ export default {
                     console.log(this.formData)
                     Swal.hideLoading()
                     Swal.fire('Re-upload success', '', 'success')
-                    router.push({ path: '/' })
+                    CourseService.get_course()
+                      .then((response) => {
+                        GStore.course = response.data
+                        console.log(GStore.course)
+                        console.log(GStore.detail)
+                        router.push({
+                          name: 'table',
+                          params: { id: GStore.detail.id }
+                        })
+                      })
+                      .catch((error) => {
+                        console.error('Failed to fetch course data:', error)
+                      })
                   })
                   .catch(() => {
                     Swal.hideLoading()
