@@ -12,10 +12,17 @@
         {{ question }}
       </th>
     </tr>
-    <tr v-for="result in GStore.result.data" :key="result">
+    <tr
+      v-for="(result, rowIndex) in GStore.result.data"
+      :key="result.student_id"
+    >
       <td>{{ result.student_id }}</td>
-      <td v-for="percentage in result.answers" :key="percentage">
-        {{ percentage }}
+      <td
+        v-for="(percentage, index) in result.answers"
+        :key="index"
+        @click="logPercentage(rowIndex, index, percentage)"
+      >
+        {{ percentage.percentage }}
       </td>
     </tr>
   </table>
@@ -55,6 +62,11 @@ export default {
     go_to_google() {
       this.table_student = false
       this.table_google = true
+    },
+    logPercentage(rowIndex, index, percentage) {
+      console.log(
+        `Row Index: ${rowIndex}, Column Index: ${index}, Percentage: ${percentage.percentage}`
+      )
     }
   },
   beforeRouteEnter() {
@@ -66,6 +78,7 @@ export default {
         ResultService.tableResult(GStore.detail.id).then((response) => {
           GStore.result = response.data
           if (response.status === 200) {
+            console.log(GStore.result)
             Swal.hideLoading() // Close the loading spinner
             Swal.fire('Compare success', '', 'success')
           }
