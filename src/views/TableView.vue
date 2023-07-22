@@ -67,6 +67,12 @@ export default {
       console.log(
         `Row Index: ${rowIndex}, Column Index: ${index}, Percentage: ${percentage.percentage}`
       )
+      const keep = GStore.result.data[rowIndex].answers[index].comparison_data
+      console.log(keep)
+      // if (percentage.percentage > 0) {
+      //   const comparisonData = keep.comparison_data
+      //   console.log(comparisonData)
+      // }
     }
   },
   beforeRouteEnter() {
