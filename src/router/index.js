@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import TableView from '../views/TableView.vue'
 import CourseService from '@/services/CourseService'
 import UploadView from '../views/UploadView.vue'
+import DetailView from '../views/DetailView.vue'
 import GStore from '@/store'
 const routes = [
   {
@@ -26,12 +27,24 @@ const routes = [
       import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
+    path: '/detail/:id',
+    name: 'detail',
+    props: true,
+    component: DetailView,
+    beforeEnter: (to) => {
+      console.log(to.params.id)
+      GStore.table_id = to.params.id
+      GStore.detail = GStore.course.find(
+        (itemInArray) => itemInArray.id == to.params.id
+      )
+    }
+  },
+  {
     path: '/table/:id',
     name: 'table',
     props: true,
     component: TableView,
     beforeEnter: (to, from, next) => {
-      GStore.result = null
       console.log('--this go to table--')
       GStore.detail = GStore.course.find(
         (itemInArray) => itemInArray.id == to.params.id

@@ -20,7 +20,7 @@
       <td
         v-for="(percentage, index) in result.answers"
         :key="index"
-        @click="logPercentage(rowIndex, index, percentage)"
+        @click="dataView(rowIndex, index, percentage)"
       >
         {{ percentage.percentage }}
       </td>
@@ -45,6 +45,7 @@
 <script>
 import Swal from 'sweetalert2'
 import ResultService from '@/services/ResultService.js'
+import router from '../router'
 import GStore from '@/store'
 export default {
   inject: ['GStore'],
@@ -63,12 +64,24 @@ export default {
       this.table_student = false
       this.table_google = true
     },
-    logPercentage(rowIndex, index, percentage) {
+    dataView(rowIndex, index, percentage) {
       console.log(
         `Row Index: ${rowIndex}, Column Index: ${index}, Percentage: ${percentage.percentage}`
       )
-      const keep = GStore.result.data[rowIndex].answers[index].comparison_data
-      console.log(keep)
+      const comparison_data =
+        GStore.result.data[rowIndex].answers[index].comparison_data
+      console.log(comparison_data)
+      const name = GStore.result.data[rowIndex].student_name
+      console.log(name)
+      GStore.compareDetail = { name: name, copare_data: comparison_data }
+      console.log(GStore.compareDetail)
+      if (percentage.percentage > 0) {
+        router.push({
+          name: 'detail',
+          params: { id: GStore.detail.id }
+        })
+      }
+
       // if (percentage.percentage > 0) {
       //   const comparisonData = keep.comparison_data
       //   console.log(comparisonData)
@@ -76,21 +89,23 @@ export default {
     }
   },
   beforeRouteEnter() {
-    Swal.fire({
-      title: 'Processing',
-      html: '',
-      didOpen: () => {
-        Swal.showLoading()
-        ResultService.tableResult(GStore.detail.id).then((response) => {
-          GStore.result = response.data
-          if (response.status === 200) {
-            console.log(GStore.result)
-            Swal.hideLoading() // Close the loading spinner
-            Swal.fire('Compare success', '', 'success')
-          }
-        })
-      }
-    })
+    if (GStore.table_id != GStore.detail.id) {
+      Swal.fire({
+        title: 'Processing',
+        html: '',
+        didOpen: () => {
+          Swal.showLoading()
+          ResultService.tableResult(GStore.detail.id).then((response) => {
+            GStore.result = response.data
+            if (response.status === 200) {
+              console.log(GStore.result)
+              Swal.hideLoading() // Close the loading spinner
+              Swal.fire('Compare success', '', 'success')
+            }
+          })
+        }
+      })
+    }
   }
 }
 </script>
