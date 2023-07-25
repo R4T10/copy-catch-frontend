@@ -69,10 +69,10 @@ export default {
               FileService.uploadFile(this.formData).then((response) => {
                 console.log(response.data.message)
                 if (response.data.message == 'Upload successful') {
-                  ResultService.tableResult().then((response) => {
+                  ResultService.tableResult('3').then((response) => {
                     GStore.result = response.data
                     if (response.status == 200) {
-                      ResultService.google_tableResult().then((response) => {
+                      ResultService.google_tableResult('3').then((response) => {
                         GStore.google_result = response.data
                         if (response.status == 200) {
                           Swal.hideLoading() // Close the loading spinner
