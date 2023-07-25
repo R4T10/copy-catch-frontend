@@ -72,8 +72,14 @@ export default {
         GStore.result.data[rowIndex].answers[index].comparison_data
       console.log(comparison_data)
       const name = GStore.result.data[rowIndex].student_name
+      const answer = GStore.result.data[rowIndex].answers[index].answer
       console.log(name)
-      GStore.compareDetail = { name: name, copare_data: comparison_data }
+      console.log(answer)
+      GStore.compareDetail = {
+        name: name,
+        answer: answer,
+        compare_data: comparison_data
+      }
       console.log(GStore.compareDetail)
       if (percentage.percentage > 0) {
         router.push({
