@@ -26,7 +26,7 @@
       </td>
     </tr>
   </table>
-  <!-- 
+
   <table v-if="table_google">
     <tr>
       <th></th>
@@ -34,13 +34,20 @@
         {{ question }}
       </th>
     </tr>
-    <tr v-for="result in GStore.google_result.data" :key="result">
+    <tr
+      v-for="(result, rowIndex) in GStore.google_result.data"
+      :key="result.student_id"
+    >
       <td>{{ result.student_id }}</td>
-      <td v-for="percentage in result.answers" :key="percentage">
-        {{ percentage }}
+      <td
+        v-for="(percentage, index) in result.answers"
+        :key="index"
+        @click="dataView(rowIndex, index, percentage)"
+      >
+        {{ percentage.percentage }}
       </td>
     </tr>
-  </table> -->
+  </table>
 </template>
 <script>
 import Swal from 'sweetalert2'
@@ -68,19 +75,40 @@ export default {
       console.log(
         `Row Index: ${rowIndex}, Column Index: ${index}, Percentage: ${percentage.percentage}`
       )
-      const comparison_data =
-        GStore.result.data[rowIndex].answers[index].comparison_data
-      console.log(comparison_data)
-      const name = GStore.result.data[rowIndex].student_name
-      const answer = GStore.result.data[rowIndex].answers[index].answer
-      console.log(name)
-      console.log(answer)
-      GStore.compareDetail = {
-        name: name,
-        answer: answer,
-        compare_data: comparison_data
+      if (this.table_student == true) {
+        const comparison_data =
+          GStore.result.data[rowIndex].answers[index].comparison_data
+        const name = GStore.result.data[rowIndex].student_name
+        const answer = GStore.result.data[rowIndex].answers[index].answer
+        console.log(name)
+        console.log(answer)
+        console.log(comparison_data)
+        GStore.compareDetail = {
+          name: name,
+          answer: answer,
+          compare_data: comparison_data,
+          check_table: this.table_student
+        }
+      } else {
+        const comparison_data =
+          GStore.google_result.data[rowIndex].answers[index].comparison_data
+        const name = GStore.google_result.data[rowIndex].student_name
+        const answer = GStore.result.data[rowIndex].answers[index].answer
+        console.log(name)
+        console.log(answer)
+        console.log(comparison_data)
+        GStore.compareDetail = {
+          name: name,
+          answer: answer,
+          compare_data: comparison_data,
+          check_table: this.table_student
+        }
       }
-      console.log(GStore.compareDetail)
+
+      // console.log(GStore.compareDetail)
+      // console.log(GStore.result)
+      // console.log('-----------------------------------')
+      // console.log(GStore.google_result)
       if (percentage.percentage > 0) {
         router.push({
           name: 'detail',
@@ -104,9 +132,16 @@ export default {
           ResultService.tableResult(GStore.detail.id).then((response) => {
             GStore.result = response.data
             if (response.status === 200) {
-              console.log(GStore.result)
-              Swal.hideLoading() // Close the loading spinner
-              Swal.fire('Compare success', '', 'success')
+              ResultService.google_tableResult(GStore.detail.id).then(
+                (response) => {
+                  GStore.google_result = response.data
+                  if (response.status === 200) {
+                    console.log(GStore.result)
+                    Swal.hideLoading()
+                    Swal.fire('Compare success', '', 'success')
+                  }
+                }
+              )
             }
           })
         }
