@@ -4,6 +4,7 @@ import TableView from '../views/TableView.vue'
 import CourseService from '@/services/CourseService'
 import UploadView from '../views/UploadView.vue'
 import DetailView from '../views/DetailView.vue'
+import GoogleTableView from '../views/GoogleTableView.vue'
 import GStore from '@/store'
 const routes = [
   {
@@ -44,6 +45,23 @@ const routes = [
     name: 'table',
     props: true,
     component: TableView,
+    beforeEnter: (to, from, next) => {
+      console.log('--this go to table--')
+      GStore.detail = GStore.course.find(
+        (itemInArray) => itemInArray.id == to.params.id
+      )
+      if (GStore.detail.file == false) {
+        next('/upload/' + to.params.id)
+      } else {
+        next()
+      }
+    }
+  },
+  {
+    path: '/table_google/:id',
+    name: 'table_google',
+    props: true,
+    component: GoogleTableView,
     beforeEnter: (to, from, next) => {
       console.log('--this go to table--')
       GStore.detail = GStore.course.find(

@@ -5,15 +5,15 @@
     </button>
     <button @click="go_to_google" id="uploadbtn">Google Search</button>
   </div>
-  <table v-if="GStore.result != null">
+  <table v-if="GStore.google_result.question != null">
     <tr>
       <th></th>
-      <th v-for="question in GStore.result.question" :key="question">
+      <th v-for="question in GStore.google_result.question" :key="question">
         {{ question }}
       </th>
     </tr>
     <tr
-      v-for="(result, rowIndex) in GStore.result.data"
+      v-for="(result, rowIndex) in GStore.google_result.data"
       :key="result.student_id"
     >
       <td>{{ result.student_id }}</td>
@@ -28,8 +28,6 @@
   </table>
 </template>
 <script>
-import Swal from 'sweetalert2'
-import ResultService from '@/services/ResultService.js'
 import router from '../router'
 import GStore from '@/store'
 export default {
@@ -52,8 +50,8 @@ export default {
         `Row Index: ${rowIndex}, Column Index: ${index}, Percentage: ${percentage.percentage}`
       )
       const comparison_data =
-        GStore.result.data[rowIndex].answers[index].comparison_data
-      const name = GStore.result.data[rowIndex].student_name
+        GStore.google_result.data[rowIndex].answers[index].comparison_data
+      const name = GStore.google_result.data[rowIndex].student_name
       const answer = GStore.result.data[rowIndex].answers[index].answer
       console.log(name)
       console.log(answer)
@@ -62,7 +60,7 @@ export default {
         name: name,
         answer: answer,
         compare_data: comparison_data,
-        check_table: 'student'
+        check_table: 'google'
       }
 
       // console.log(GStore.compareDetail)
@@ -80,32 +78,6 @@ export default {
       //   const comparisonData = keep.comparison_data
       //   console.log(comparisonData)
       // }
-    }
-  },
-  beforeRouteEnter() {
-    if (GStore.table_id != GStore.detail.id) {
-      Swal.fire({
-        title: 'Processing',
-        html: '',
-        didOpen: () => {
-          Swal.showLoading()
-          ResultService.tableResult(GStore.detail.id).then((response) => {
-            GStore.result = response.data
-            if (response.status === 200) {
-              ResultService.google_tableResult(GStore.detail.id).then(
-                (response) => {
-                  GStore.google_result = response.data
-                  if (response.status === 200) {
-                    console.log(GStore.result)
-                    Swal.hideLoading()
-                    Swal.fire('Compare success', '', 'success')
-                  }
-                }
-              )
-            }
-          })
-        }
-      })
     }
   }
 }

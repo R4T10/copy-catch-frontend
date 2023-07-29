@@ -4,7 +4,7 @@
     <br />
     {{ GStore.compareDetail.answer }}
     <h2>similar answer</h2>
-    <div v-if="GStore.compareDetail.check_table == true">
+    <div v-if="GStore.compareDetail.check_table == 'student'">
       <div
         v-for="compare_data in GStore.compareDetail.compare_data"
         :key="compare_data"
@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div v-if="GStore.compareDetail.check_table == false">
+    <div v-if="GStore.compareDetail.check_table == 'google'">
       <div
         v-for="compare_data in GStore.compareDetail.compare_data"
         :key="compare_data"
