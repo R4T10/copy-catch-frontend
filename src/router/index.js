@@ -1,23 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import TableView from '../views/TableView.vue'
-import CourseService from '@/services/CourseService'
 import UploadView from '../views/UploadView.vue'
 import DetailView from '../views/DetailView.vue'
 import GoogleTableView from '../views/GoogleTableView.vue'
+import CourseView from '../views/CourseView.vue'
 import GStore from '@/store'
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView,
-    beforeEnter: () => {
-      return CourseService.get_course().then((response) => {
-        GStore.course = response.data
-        console.log(GStore.course)
-      })
-    }
+    component: HomeView
   },
+  {
+    path: '/course_list',
+    name: 'course_list',
+    component: CourseView
+  },
+
   {
     path: '/about',
     name: 'about',

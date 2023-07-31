@@ -5,5 +5,6 @@ export default reactive({
   course: null,
   detail: null,
   compareDetail: null,
-  table_id: null
+  table_id: null,
+  user: null
 })

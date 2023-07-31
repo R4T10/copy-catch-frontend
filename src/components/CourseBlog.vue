@@ -9,7 +9,7 @@
       <span>
         Course ID: {{ detail.course_id }} Course Name:
         {{ detail.course_name }} Examination: {{ detail.examination }} Year:
-        {{ detail.year }} Professor: {{ detail.professor }}
+        {{ detail.year }}
       </span>
     </div>
   </router-link>

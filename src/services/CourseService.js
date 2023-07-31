@@ -10,7 +10,7 @@ export default {
   edit_course(formData) {
     return apiClient.post('/edit_course', formData)
   },
-  get_course() {
-    return apiClient.get('/get_course_list')
+  get_course(formData) {
+    return apiClient.post('/get_course_list', formData)
   }
 }
