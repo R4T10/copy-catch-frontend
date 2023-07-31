@@ -85,7 +85,7 @@ export default {
                       })
                     }
                   })
-                } else if (response.data.message == 'Invalid format') {
+                } else if (response.data.message == 'Invalid file format') {
                   Swal.hideLoading()
                   Swal.fire('Invalid file format', '', 'warning')
                 } else {
