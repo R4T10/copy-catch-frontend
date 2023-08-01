@@ -77,7 +77,10 @@ export default {
                     console.log(this.formData)
                     Swal.hideLoading()
                     Swal.fire('Upload success', '', 'success')
-                    CourseService.get_course()
+                    const name = this.GStore.user.firstname_EN
+                    const courseFormData = new FormData()
+                    courseFormData.append('name', name)
+                    CourseService.get_course(courseFormData)
                       .then((response) => {
                         GStore.course = response.data
                         console.log(GStore.course)
@@ -104,7 +107,10 @@ export default {
                     console.log(this.formData)
                     Swal.hideLoading()
                     Swal.fire('Re-upload success', '', 'success')
-                    CourseService.get_course()
+                    const name = this.GStore.user.firstname_EN
+                    const courseFormData = new FormData()
+                    courseFormData.append('name', name)
+                    CourseService.get_course(courseFormData)
                       .then((response) => {
                         GStore.course = response.data
                         console.log(GStore.course)

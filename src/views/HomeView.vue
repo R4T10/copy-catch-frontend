@@ -21,23 +21,6 @@ export default {
         window.location.href = response.data
       })
     }
-  },
-  created() {
-    const urlParams = new URLSearchParams(window.location.search)
-    const code = urlParams.get('code')
-    const formData = {
-      code
-    }
-    console.log(formData)
-    if (code) {
-      LoginService.getAccessToken(formData)
-        .then((response) => {
-          this.userInfo = response.data
-        })
-        .catch((error) => {
-          console.error('Error fetching access token:', error)
-        })
-    }
   }
 }
 </script>

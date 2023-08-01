@@ -61,7 +61,6 @@ export default {
             <option value="midterm">Midterm</option>
             <option value="final">Final</option>
           </select>
-          <input id="professor" class="swal2-input" placeholder="Professor">
         `,
         showCancelButton: true,
         confirmButtonText: 'Confirm',
@@ -73,7 +72,7 @@ export default {
           const year = Swal.getPopup().querySelector('#year').value
           const examination =
             Swal.getPopup().querySelector('#examination').value
-          const professor = Swal.getPopup().querySelector('#professor').value
+          const professor = this.GStore.user.firstname_EN
 
           if (
             !course_id ||

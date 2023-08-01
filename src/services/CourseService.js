@@ -11,6 +11,12 @@ export default {
     return apiClient.post('/edit_course', formData)
   },
   get_course(formData) {
-    return apiClient.post('/get_course_list', formData)
+    const access_token = localStorage.getItem('access_token')
+
+    return apiClient.post('/get_course_list', formData, {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    })
   }
 }

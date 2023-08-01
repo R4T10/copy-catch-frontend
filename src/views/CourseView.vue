@@ -1,13 +1,9 @@
 <template>
+  <div class="home">
+    <input type="text" v-model="searchQuery" placeholder="Enter search query" />
+    <button @click="showForm">Adding Course</button>
+  </div>
   <div v-if="GStore.course">
-    <div class="home">
-      <input
-        type="text"
-        v-model="searchQuery"
-        placeholder="Enter search query"
-      />
-      <button @click="showForm">Adding Course</button>
-    </div>
     <CourseBlog
       v-for="detail in filteredData"
       :key="detail.id"
@@ -25,7 +21,7 @@ import Swal from 'sweetalert2'
 import CourseService from '@/services/CourseService'
 import CourseBlog from '@/components/CourseBlog.vue'
 import LoginService from '@/services/LoginService'
-import GStore from '@/store'
+// import GStore from '@/store'
 export default {
   name: 'HomeView',
   inject: ['GStore'],
@@ -125,7 +121,12 @@ export default {
       // console.log(formData)
       CourseService.add_course(formData)
         .then(() => {
-          location.reload()
+          const name = this.GStore.user.firstname_EN
+          const courseFormData = new FormData()
+          courseFormData.append('name', name)
+          CourseService.get_course(courseFormData).then((response) => {
+            this.GStore.course = response.data
+          })
         })
         .catch((error) => {
           Swal.fire('Error', 'Failed to add course', 'error')
@@ -134,32 +135,41 @@ export default {
     },
     logout() {
       // this.accessToken = null
-      this.userInfo = null
+      LoginService.clearAccessToken()
+    },
+    fetchUserData(access_token) {
+      // Use the stored access token to fetch user data and course data
+      LoginService.fetchUserInfo(access_token)
+        .then((response) => {
+          this.GStore.user = response.data
+          const name = this.GStore.user.firstname_EN
+          const courseFormData = new FormData()
+          courseFormData.append('name', name)
+          CourseService.get_course(courseFormData).then((response) => {
+            this.GStore.course = response.data
+          })
+        })
+        .catch((error) => {
+          console.error('Error fetching user data:', error)
+        })
     }
   },
   created() {
     const urlParams = new URLSearchParams(window.location.search)
     const code = urlParams.get('code')
+    localStorage.setItem('oauth_code', code)
+    console.log(code)
     const formData = {
       code
     }
-    console.log(formData)
+
     if (code) {
-      LoginService.getAccessToken(formData)
-        .then((response) => {
-          localStorage.setItem('accessToken', code)
-          this.GStore.user = response.data
-          const name = GStore.user.firstname_EN
-          const courseFormData = new FormData()
-          courseFormData.append('name', name)
-          CourseService.get_course(courseFormData).then((response) => {
-            GStore.course = response.data
-            console.log(GStore.course)
-          })
-        })
-        .catch((error) => {
-          console.error('Error fetching access token:', error)
-        })
+      LoginService.getAccessToken(formData).then(() => {
+        const access_token = LoginService.getStoredAccessToken()
+        if (access_token) {
+          this.fetchUserData(access_token)
+        }
+      })
     }
   }
 }
