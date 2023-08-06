@@ -49,6 +49,7 @@ export default {
       this.selectedFile = file
       this.formData = new FormData()
       this.formData.append('file', file)
+      this.formData.append('id', '3')
       // } else {
       // Swal.fire('Invalid file type', '', 'error')
       // }
