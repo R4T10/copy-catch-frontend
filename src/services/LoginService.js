@@ -2,11 +2,7 @@ import apiClient from '@/services/AxiosClient.js'
 
 export default {
   getAccessToken(formData) {
-    return apiClient.post('/callback', formData).then((response) => {
-      const access_token = response.data.access_token
-      localStorage.setItem('access_token', access_token)
-      return access_token
-    })
+    return apiClient.post('/callback', formData)
   },
   getStoredAccessToken() {
     return localStorage.getItem('access_token')

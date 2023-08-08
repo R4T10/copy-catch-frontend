@@ -156,20 +156,32 @@ export default {
   },
   created() {
     const urlParams = new URLSearchParams(window.location.search)
-    const code = urlParams.get('code')
-    localStorage.setItem('oauth_code', code)
+    const get_code = urlParams.get('code')
+    localStorage.setItem('oauth_code', get_code)
+    const code = localStorage.getItem('oauth_code')
     console.log(code)
     const formData = {
       code
     }
 
     if (code) {
-      LoginService.getAccessToken(formData).then(() => {
-        const access_token = LoginService.getStoredAccessToken()
-        if (access_token) {
-          this.fetchUserData(access_token)
-        }
-      })
+      const check = localStorage.getItem('access_token')
+      if (check != 'undefined') {
+        console.log(check)
+        this.fetchUserData(check)
+      } else {
+        LoginService.getAccessToken(formData).then((response) => {
+          const response_token = response.data.access_token
+          localStorage.setItem('access_token', response_token)
+          const access_token = localStorage.getItem('access_token')
+          if (access_token != 'undefined') {
+            console.log(access_token)
+            this.fetchUserData(access_token)
+          } else {
+            console.log('No access_token')
+          }
+        })
+      }
     }
   }
 }
