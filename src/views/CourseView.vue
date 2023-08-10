@@ -166,11 +166,10 @@ export default {
 
     if (code) {
       const check = localStorage.getItem('access_token')
-      if (check != 'undefined') {
-        console.log(check)
-        this.fetchUserData(check)
-      } else {
+      console.log(check)
+      if (check == 'undefined') {
         LoginService.getAccessToken(formData).then((response) => {
+          console.log(response.data)
           const response_token = response.data.access_token
           localStorage.setItem('access_token', response_token)
           const access_token = localStorage.getItem('access_token')
@@ -181,6 +180,8 @@ export default {
             console.log('No access_token')
           }
         })
+      } else {
+        this.fetchUserData(check)
       }
     }
   }
