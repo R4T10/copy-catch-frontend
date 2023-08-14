@@ -21,6 +21,7 @@ import Swal from 'sweetalert2'
 import CourseService from '@/services/CourseService'
 import CourseBlog from '@/components/CourseBlog.vue'
 import LoginService from '@/services/LoginService'
+import router from '../router'
 // import GStore from '@/store'
 export default {
   name: 'HomeView',
@@ -134,11 +135,12 @@ export default {
         })
     },
     logout() {
-      // this.accessToken = null
-      LoginService.clearAccessToken()
+      localStorage.setItem('access_token', 'undefined')
+      localStorage.setItem('oauth_code', 'undefined')
+      this.GStore.user = null
+      router.push({ name: 'home' })
     },
     fetchUserData(access_token) {
-      // Use the stored access token to fetch user data and course data
       LoginService.fetchUserInfo(access_token)
         .then((response) => {
           this.GStore.user = response.data
@@ -174,7 +176,6 @@ export default {
           localStorage.setItem('access_token', response_token)
           const access_token = localStorage.getItem('access_token')
           if (access_token != 'undefined') {
-            console.log(access_token)
             this.fetchUserData(access_token)
           } else {
             console.log('No access_token')

@@ -4,10 +4,16 @@
     <router-link to="/about">Google Search</router-link>
   </nav> -->
 
-  <h1></h1>
+  <div class="block-nav">
+    <p v-if="GStore.user != null">{{ GStore.user.cmuitaccount_name }}</p>
+  </div>
   <router-view />
 </template>
-
+<script>
+export default {
+  inject: ['GStore']
+}
+</script>
 <style>
 html,
 body {
@@ -29,7 +35,15 @@ h1 {
   background: #04724d;
   margin: 0 0 80px;
 }
-
+p {
+  margin: 0 0 80px;
+}
+.block-nav {
+  width: 100%;
+  height: 80px;
+  background: #04724d;
+  margin: 0 0 80px;
+}
 nav {
   padding: 30px;
 }

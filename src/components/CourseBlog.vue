@@ -36,7 +36,12 @@ export default {
       const formData = new FormData()
       formData.append('id', this.detail.id)
       CourseService.delete_course(formData)
-      location.reload()
+      const name = this.GStore.user.firstname_EN
+      const courseFormData = new FormData()
+      courseFormData.append('name', name)
+      CourseService.get_course(courseFormData).then((response) => {
+        this.GStore.course = response.data
+      })
     },
     reUploadFile() {
       Swal.fire({
@@ -114,7 +119,12 @@ export default {
       // console.log(formData)
       CourseService.edit_course(formData)
         .then(() => {
-          location.reload()
+          const name = this.GStore.user.firstname_EN
+          const courseFormData = new FormData()
+          courseFormData.append('name', name)
+          CourseService.get_course(courseFormData).then((response) => {
+            this.GStore.course = response.data
+          })
         })
         .catch((error) => {
           Swal.fire('Error', 'Failed to edit course', 'error')

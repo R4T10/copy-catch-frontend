@@ -7,10 +7,6 @@ export default {
   getStoredAccessToken() {
     return localStorage.getItem('access_token')
   },
-
-  clearAccessToken() {
-    return localStorage.removeItem('access_token')
-  },
   fetchUserInfo(accessToken) {
     return apiClient.get('/userinfo', {
       headers: {
