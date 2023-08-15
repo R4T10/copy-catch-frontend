@@ -5,6 +5,13 @@
     </button>
     <button @click="go_to_google" id="uploadbtn">Google Search</button>
   </div>
+  <span
+    >Course ID: {{ GStore.detail.course_id }} Course Name:
+    {{ GStore.detail.course_name }} Examination:{{
+      GStore.detail.examination
+    }}
+    Year:{{ GStore.detail.year }}</span
+  >
   <table v-if="GStore.google_result.question != null">
     <tr>
       <th></th>
@@ -62,22 +69,12 @@ export default {
         compare_data: comparison_data,
         check_table: 'google'
       }
-
-      // console.log(GStore.compareDetail)
-      // console.log(GStore.result)
-      // console.log('-----------------------------------')
-      // console.log(GStore.google_result)
       if (percentage.percentage > 0) {
         router.push({
           name: 'detail',
           params: { id: GStore.detail.id }
         })
       }
-
-      // if (percentage.percentage > 0) {
-      //   const comparisonData = keep.comparison_data
-      //   console.log(comparisonData)
-      // }
     }
   }
 }

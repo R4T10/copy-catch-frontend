@@ -6,12 +6,32 @@
 
   <div class="block-nav">
     <p v-if="GStore.user != null">{{ GStore.user.cmuitaccount_name }}</p>
+    <button v-if="GStore.user != null" @click="logout">Logout</button>
+    <button v-if="GStore.user == null" @click="login">
+      Login with CMU OAuth
+    </button>
   </div>
   <router-view />
 </template>
 <script>
+import LoginService from '@/services/LoginService'
 export default {
-  inject: ['GStore']
+  inject: ['GStore'],
+  methods: {
+    logout() {
+      localStorage.setItem('access_token', 'undefined')
+      localStorage.setItem('oauth_code', 'undefined')
+      this.GStore.user = null
+      this.$router.push({ name: 'home' })
+    },
+    login() {
+      localStorage.setItem('access_token', 'undefined')
+      localStorage.setItem('oauth_code', 'undefined')
+      LoginService.login().then((response) => {
+        window.location.href = response.data
+      })
+    }
+  }
 }
 </script>
 <style>

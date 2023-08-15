@@ -1,18 +1,18 @@
 <template>
-  <div class="home">
+  <div v-if="GStore.course" class="home">
     <input type="text" v-model="searchQuery" placeholder="Enter search query" />
     <button @click="showForm">Adding Course</button>
-  </div>
-  <div v-if="GStore.course">
-    <CourseBlog
-      v-for="detail in filteredData"
-      :key="detail.id"
-      :detail="detail"
-    >
-    </CourseBlog>
-    <h2>User Information:</h2>
-    <pre>{{ GStore.user }}</pre>
-    <button @click="logout">Logout</button>
+
+    <div v-if="GStore.course">
+      <CourseBlog
+        v-for="detail in filteredData"
+        :key="detail.id"
+        :detail="detail"
+      >
+      </CourseBlog>
+      <h2>User Information:</h2>
+      <pre>{{ GStore.user }}</pre>
+    </div>
   </div>
 </template>
 
@@ -21,7 +21,6 @@ import Swal from 'sweetalert2'
 import CourseService from '@/services/CourseService'
 import CourseBlog from '@/components/CourseBlog.vue'
 import LoginService from '@/services/LoginService'
-import router from '../router'
 // import GStore from '@/store'
 export default {
   name: 'HomeView',
@@ -134,12 +133,6 @@ export default {
           console.error(error)
         })
     },
-    logout() {
-      localStorage.setItem('access_token', 'undefined')
-      localStorage.setItem('oauth_code', 'undefined')
-      this.GStore.user = null
-      router.push({ name: 'home' })
-    },
     fetchUserData(access_token) {
       LoginService.fetchUserInfo(access_token)
         .then((response) => {
@@ -149,6 +142,7 @@ export default {
           courseFormData.append('name', name)
           CourseService.get_course(courseFormData).then((response) => {
             this.GStore.course = response.data
+            Swal.close()
           })
         })
         .catch((error) => {
@@ -170,19 +164,29 @@ export default {
       const check = localStorage.getItem('access_token')
       console.log(check)
       if (check == 'undefined') {
-        LoginService.getAccessToken(formData).then((response) => {
-          console.log(response.data)
-          const response_token = response.data.access_token
-          localStorage.setItem('access_token', response_token)
-          const access_token = localStorage.getItem('access_token')
-          if (access_token != 'undefined') {
-            this.fetchUserData(access_token)
-          } else {
-            console.log('No access_token')
+        Swal.fire({
+          html: '',
+          showConfirmButton: false,
+          timer: 2000,
+          didOpen: () => {
+            Swal.showLoading()
+            LoginService.getAccessToken(formData).then((response) => {
+              console.log(response.data)
+              const response_token = response.data.access_token
+              localStorage.setItem('access_token', response_token)
+              const access_token = localStorage.getItem('access_token')
+              if (access_token != 'undefined') {
+                this.fetchUserData(access_token)
+              } else {
+                console.log('No access_token')
+              }
+            })
           }
         })
       } else {
-        this.fetchUserData(check)
+        if (this.GStore.user == null) {
+          this.fetchUserData(check)
+        }
       }
     }
   }

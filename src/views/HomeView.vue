@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <button @click="login">Login with CMU OAuth</button>
+    <!-- <button @click="login">Login with CMU OAuth</button> -->
   </div>
 </template>
 
