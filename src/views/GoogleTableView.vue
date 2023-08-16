@@ -60,6 +60,7 @@ export default {
         GStore.google_result.data[rowIndex].answers[index].comparison_data
       const name = GStore.google_result.data[rowIndex].student_name
       const answer = GStore.result.data[rowIndex].answers[index].answer
+      const question = GStore.result.data[rowIndex].answers[index].question_text
       console.log(name)
       console.log(answer)
       console.log(comparison_data)
@@ -67,6 +68,7 @@ export default {
         name: name,
         answer: answer,
         compare_data: comparison_data,
+        question: question,
         check_table: 'google'
       }
       if (percentage.percentage > 0) {

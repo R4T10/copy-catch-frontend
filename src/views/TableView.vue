@@ -67,6 +67,7 @@ export default {
         GStore.result.data[rowIndex].answers[index].comparison_data
       const name = GStore.result.data[rowIndex].student_name
       const answer = GStore.result.data[rowIndex].answers[index].answer
+      const question = GStore.result.data[rowIndex].answers[index].question_text
       console.log(name)
       console.log(answer)
       console.log(comparison_data)
@@ -74,6 +75,7 @@ export default {
         name: name,
         answer: answer,
         compare_data: comparison_data,
+        question: question,
         check_table: 'student'
       }
       if (percentage.percentage > 0) {
@@ -86,30 +88,33 @@ export default {
   },
   beforeRouteEnter() {
     if (GStore.table_id != GStore.detail.id) {
-      Swal.fire({
-        title: 'Processing',
-        html: '',
-        didOpen: () => {
-          if (GStore.result == null) {
-            Swal.showLoading()
-            ResultService.tableResult(GStore.detail.id).then((response) => {
-              GStore.result = response.data
-              if (response.status === 200) {
-                ResultService.google_tableResult(GStore.detail.id).then(
-                  (response) => {
-                    GStore.google_result = response.data
-                    if (response.status === 200) {
-                      console.log(GStore.result)
-                      Swal.hideLoading()
-                      Swal.fire('Compare success', '', 'success')
+      if (GStore.result == null) {
+        Swal.fire({
+          title: 'Processing',
+          html: '',
+          didOpen: () => {
+            if (GStore.result == null) {
+              Swal.showLoading()
+              ResultService.tableResult(GStore.detail.id).then((response) => {
+                GStore.result = response.data
+                console.log(GStore.result)
+                if (response.status === 200) {
+                  ResultService.google_tableResult(GStore.detail.id).then(
+                    (response) => {
+                      GStore.google_result = response.data
+                      if (response.status === 200) {
+                        console.log(GStore.result)
+                        Swal.hideLoading()
+                        Swal.fire('Compare success', '', 'success')
+                      }
                     }
-                  }
-                )
-              }
-            })
+                  )
+                }
+              })
+            }
           }
-        }
-      })
+        })
+      }
     }
   }
 }

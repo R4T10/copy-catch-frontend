@@ -1,5 +1,7 @@
 <template>
   <div>
+    {{ GStore.compareDetail.question }}
+    <br />
     {{ GStore.compareDetail.name }}
     <br />
     {{ GStore.compareDetail.answer }}
