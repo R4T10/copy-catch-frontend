@@ -4,6 +4,7 @@
       Student
     </button>
     <button @click="go_to_google" id="uploadbtn">Google Search</button>
+    <button @click="go_to_student_list" id="uploadbtn">Student List</button>
   </div>
   <span
     >Course ID: {{ GStore.detail.course_id }} Course Name:
@@ -49,6 +50,12 @@ export default {
     go_to_google() {
       router.push({
         name: 'table_google',
+        params: { id: GStore.detail.id }
+      })
+    },
+    go_to_student_list() {
+      router.push({
+        name: 'student_list',
         params: { id: GStore.detail.id }
       })
     },

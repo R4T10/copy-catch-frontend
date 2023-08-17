@@ -4,6 +4,7 @@
       Student
     </button>
     <button @click="go_to_google" id="uploadbtn">Google Search</button>
+    <button @click="go_to_student_list" id="uploadbtn">Student List</button>
   </div>
   <span
     >Course ID: {{ GStore.detail.course_id }} Course Name:
@@ -37,6 +38,7 @@
 <script>
 import Swal from 'sweetalert2'
 import ResultService from '@/services/ResultService.js'
+import StudentService from '@/services/StudentService.js'
 import router from '../router'
 import GStore from '@/store'
 export default {
@@ -56,6 +58,12 @@ export default {
     go_to_google() {
       router.push({
         name: 'table_google',
+        params: { id: GStore.detail.id }
+      })
+    },
+    go_to_student_list() {
+      router.push({
+        name: 'student_list',
         params: { id: GStore.detail.id }
       })
     },
@@ -93,25 +101,30 @@ export default {
           title: 'Processing',
           html: '',
           didOpen: () => {
-            if (GStore.result == null) {
-              Swal.showLoading()
-              ResultService.tableResult(GStore.detail.id).then((response) => {
-                GStore.result = response.data
+            Swal.showLoading()
+            ResultService.tableResult(GStore.detail.id).then((response) => {
+              GStore.result = response.data
+              console.log(GStore.result)
+              if (response.status === 200) {
+                // ResultService.google_tableResult(GStore.detail.id).then(
+                //   (response) => {
+                // GStore.google_result = response.data
+                // if (response.status === 200) {
                 console.log(GStore.result)
-                if (response.status === 200) {
-                  ResultService.google_tableResult(GStore.detail.id).then(
-                    (response) => {
-                      GStore.google_result = response.data
-                      if (response.status === 200) {
-                        console.log(GStore.result)
-                        Swal.hideLoading()
-                        Swal.fire('Compare success', '', 'success')
-                      }
+                StudentService.get_student_list(GStore.detail.id).then(
+                  (response) => {
+                    GStore.students = response.data
+                    if (response.status === 200) {
+                      Swal.hideLoading()
+                      Swal.fire('Compare success', '', 'success')
                     }
-                  )
-                }
-              })
-            }
+                  }
+                )
+                // }
+                // }
+                // )
+              }
+            })
           }
         })
       }
