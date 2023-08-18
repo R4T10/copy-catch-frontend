@@ -95,39 +95,42 @@ export default {
     }
   },
   beforeRouteEnter() {
+    console.log(GStore.table_id)
+    console.log(GStore.detail.id)
     if (GStore.table_id != GStore.detail.id) {
-      if (GStore.result == null) {
-        Swal.fire({
-          title: 'Processing',
-          html: '',
-          didOpen: () => {
-            Swal.showLoading()
-            ResultService.tableResult(GStore.detail.id).then((response) => {
-              GStore.result = response.data
+      GStore.table_id = GStore.detail.id
+      Swal.fire({
+        title: 'Processing',
+        html: '',
+        didOpen: () => {
+          Swal.showLoading()
+          // if (GStore.result == null) {
+          ResultService.tableResult(GStore.detail.id).then((response) => {
+            GStore.result = response.data
+            console.log(GStore.result)
+            if (response.status === 200) {
+              // ResultService.google_tableResult(GStore.detail.id).then(
+              //   (response) => {
+              // GStore.google_result = response.data
+              // if (response.status === 200) {
               console.log(GStore.result)
-              if (response.status === 200) {
-                // ResultService.google_tableResult(GStore.detail.id).then(
-                //   (response) => {
-                // GStore.google_result = response.data
-                // if (response.status === 200) {
-                console.log(GStore.result)
-                StudentService.get_student_list(GStore.detail.id).then(
-                  (response) => {
-                    GStore.students = response.data
-                    if (response.status === 200) {
-                      Swal.hideLoading()
-                      Swal.fire('Compare success', '', 'success')
-                    }
+              StudentService.get_student_list(GStore.detail.id).then(
+                (response) => {
+                  GStore.students = response.data
+                  if (response.status === 200) {
+                    Swal.hideLoading()
+                    Swal.fire('Compare success', '', 'success')
                   }
-                )
-                // }
-                // }
-                // )
-              }
-            })
-          }
-        })
-      }
+                }
+              )
+              // }
+              // }
+              // )
+            }
+          })
+          // }
+        }
+      })
     }
   }
 }

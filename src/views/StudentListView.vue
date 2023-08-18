@@ -18,12 +18,20 @@
       <th>Student ID</th>
       <th>Student Name</th>
       <th>Student Mail</th>
+      <th></th>
     </tr>
-    <tr v-for="(student, index) in GStore.students" :key="index">
-      <td>{{ student.student_id }}</td>
+    <tr v-for="(student, rowIndex) in GStore.students" :key="rowIndex">
+      <td>
+        {{ student.student_id }}
+      </td>
       <td>{{ student.student_name }}</td>
       <td>{{ student.student_mail }}</td>
+      <td><button @click="showStudentDetails(student)">Edit Email</button></td>
     </tr>
+    <!-- <tr>
+       <td>{{ student.student_name }}</td>
+    <td>{{ student.student_mail }}</td>
+    </tr> -->
   </table>
   <!-- {{ GStore.students }} -->
 </template>
@@ -31,6 +39,8 @@
 <script>
 import router from '../router'
 import GStore from '@/store'
+import Swal from 'sweetalert2'
+import StudentService from '@/services/StudentService.js'
 export default {
   inject: ['GStore'],
   methods: {
@@ -51,6 +61,56 @@ export default {
         name: 'student_list',
         params: { id: GStore.detail.id }
       })
+    },
+    showStudentDetails(student) {
+      const student_id = student.student_id
+      const student_name = student.student_name
+      Swal.fire({
+        title: 'Edit Student Email',
+        html: `
+      <input id="student_id" class="swal2-input" type="text" value="${student_id}" readonly>
+      <input id="student_name" class="swal2-input" type="text" value="${student_name}" readonly>
+      <input id="student_mail" class="swal2-input" type="text" placeholder="Student Email">
+    `,
+        showCancelButton: true,
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        preConfirm: () => {
+          const mail = Swal.getPopup().querySelector('#student_mail').value
+
+          if (!mail) {
+            Swal.showValidationMessage('Please fill the email')
+            return false
+          }
+
+          return { student_id, student_name, mail }
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log(result)
+          const { student_id, student_name, mail } = result.value
+          this.submitEmail(student_id, student_name, mail)
+        }
+      })
+    },
+    submitEmail(student_id, student_name, mail) {
+      const formData = {
+        student_id,
+        student_name,
+        mail,
+        course_id: GStore.detail.id
+      }
+      console.log(formData)
+      StudentService.update_email(formData)
+        .then(() => {
+          StudentService.get_student_list(GStore.detail.id).then((response) => {
+            GStore.students = response.data
+          })
+        })
+        .catch((error) => {
+          Swal.fire('Error', 'Failed to edit email', 'error')
+          console.error(error)
+        })
     }
   }
 }

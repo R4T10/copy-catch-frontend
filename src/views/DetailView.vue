@@ -28,10 +28,44 @@
         <a :href="compare_data.link"> {{ compare_data.link }} </a>
       </div>
     </div>
+    <button @click="sendEmail">Send the email</button>
   </div>
 </template>
 <script>
+import EmailService from '@/services/EmailService'
+import GStore from '@/store'
+import Swal from 'sweetalert2'
 export default {
-  inject: ['GStore']
+  inject: ['GStore'],
+  methods: {
+    sendEmail() {
+      const formData = {
+        receive_name: GStore.compareDetail.name
+      }
+      console.log(formData)
+      Swal.fire({
+        title: 'Processing',
+        html: '',
+        didOpen: () => {
+          Swal.showLoading()
+          EmailService.send_email(formData)
+            .then((response) => {
+              if (response.status === 200) {
+                Swal.hideLoading()
+                Swal.fire({
+                  title: 'Sending email success',
+                  showConfirmButton: false,
+                  timer: 2000
+                })
+              }
+            })
+            .catch((error) => {
+              Swal.fire('Error', 'Failed to Sending email', 'error')
+              console.error(error)
+            })
+        }
+      })
+    }
+  }
 }
 </script>
