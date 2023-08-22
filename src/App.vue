@@ -1,14 +1,29 @@
 <template>
-  <!-- <nav>
-    <router-link to="/">Students</router-link> |
-    <router-link to="/about">Google Search</router-link>
-  </nav> -->
-
   <div class="block-nav">
-    <p v-if="GStore.user != null">{{ GStore.user.cmuitaccount_name }}</p>
-    <button v-if="GStore.user != null" @click="logout">Logout</button>
-    <button v-if="GStore.user == null" @click="login">
-      Login with CMU OAuth
+    <img class="logo-icon" src="@/assets/logo.png" @click="home" />
+    <!-- <button class="user" v-if="GStore.user != null" @click="logout">
+      {{ GStore.user.cmuitaccount_name.charAt(0).toUpperCase() }}
+    </button> -->
+
+    <button class="user" v-if="GStore.user != null" @click="toggleDropdown">
+      {{ GStore.user.cmuitaccount_name.charAt(0).toUpperCase() }}
+    </button>
+    <div class="dropdown" v-if="showDropdown" @mouseleave="closeDropdown">
+      <div v-if="GStore.user" class="dropdown-item">
+        {{
+          GStore.user
+            ? GStore.user.firstname_EN + ' ' + GStore.user.lastname_EN
+            : ''
+        }}
+      </div>
+      <div v-if="GStore.user" class="dropdown-item" @click="course">COURSE</div>
+      <div v-if="GStore.user" class="dropdown-item" @click="logout">
+        SIGN OUT
+      </div>
+    </div>
+
+    <button class="signin" v-if="GStore.user == null" @click="login">
+      SIGN IN
     </button>
   </div>
   <router-view />
@@ -17,6 +32,12 @@
 import LoginService from '@/services/LoginService'
 export default {
   inject: ['GStore'],
+  data() {
+    return {
+      showDropdown: false
+    }
+  },
+
   methods: {
     logout() {
       localStorage.setItem('access_token', 'undefined')
@@ -30,6 +51,18 @@ export default {
       LoginService.login().then((response) => {
         window.location.href = response.data
       })
+    },
+    home() {
+      this.$router.push({ name: 'home' })
+    },
+    toggleDropdown() {
+      this.showDropdown = !this.showDropdown
+    },
+    course() {
+      this.$router.push({ name: 'course_list' })
+    },
+    closeDropdown() {
+      this.showDropdown = false
     }
   }
 }
@@ -64,16 +97,59 @@ p {
   background: #04724d;
   margin: 0 0 80px;
 }
-nav {
-  padding: 30px;
+
+.logo-icon {
+  padding: 10px;
+  position: absolute;
+  left: 0;
 }
 
-nav a {
+.signin {
+  background: none;
+  border: none;
+  color: white;
+  padding: 27px 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 20px;
   font-weight: bold;
-  color: #2c3e50;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.signin:hover {
+  text-decoration: underline;
+}
+
+.user {
+  background-color: white;
+  color: #04724d;
+  border-radius: 50%;
+  border: none;
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 40px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 20px 10px;
+}
+
+.dropdown {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  background: #04724d;
+  color: white;
+  font-weight: bold;
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+  cursor: pointer;
+  list-style: none;
+  padding: 15px 40px;
+  border-top: 1px solid white;
 }
 </style>

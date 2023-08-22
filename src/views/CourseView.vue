@@ -76,12 +76,13 @@ export default {
           const professor = this.GStore.user.firstname_EN
 
           const numericRegex = /^\d+$/
-          if (!course_id.match(numericRegex) || !year.match(numericRegex)) {
-            Swal.showValidationMessage(
-              'Please enter a valid numeric value for Course ID and Year'
-            )
-            return false
-          }
+          // if(course_id )
+          // if (!course_id.match(numericRegex) || !year.match(numericRegex)) {
+          //   Swal.showValidationMessage(
+          //     'Please enter a valid numeric value for Course ID and Year'
+          //   )
+          //   return false
+          // }
 
           if (
             !course_id ||
@@ -91,6 +92,14 @@ export default {
             !professor
           ) {
             Swal.showValidationMessage('Please fill in all fields')
+            return false
+          } else if (
+            !course_id.match(numericRegex) ||
+            !year.match(numericRegex)
+          ) {
+            Swal.showValidationMessage(
+              'Please enter a valid numeric value for Course ID and Year'
+            )
             return false
           }
 
