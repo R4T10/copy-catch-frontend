@@ -70,13 +70,27 @@ export default {
         html: `
       <input id="student_id" class="swal2-input" type="text" value="${student_id}" readonly>
       <input id="student_name" class="swal2-input" type="text" value="${student_name}" readonly>
-      <input id="student_mail" class="swal2-input" type="text" placeholder="Student Email">
+      <div class=container>
+      <input id="student_mail" class="swal2-input email-input" type="text" placeholder="Student Email">
+      <span class="email-domain">@cmu.ac.th</span>
+      </div>
+      <style>
+      .email-input {
+        width: 185px;
+      }
+      .container{
+        border-color: #ff0000
+      }
+
+    </style>
     `,
+
         showCancelButton: true,
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel',
         preConfirm: () => {
-          const mail = Swal.getPopup().querySelector('#student_mail').value
+          const mail =
+            Swal.getPopup().querySelector('#student_mail').value + '@cmu.ac.th'
 
           if (!mail) {
             Swal.showValidationMessage('Please fill the email')

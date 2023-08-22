@@ -10,12 +10,15 @@
         Course ID: {{ detail.course_id }} Course Name:
         {{ detail.course_name }} Examination: {{ detail.examination }} Year:
         {{ detail.year }}
+        {{ detail.file }}
       </span>
     </div>
   </router-link>
   <button @click="showForm">Edit detail</button>
   <button @click="deleteCourse">Delete</button>
-  <button @click="reUploadFile">Reupload file</button>
+  <button @click="reUploadFile" :class="{ 'disabled-button': !detail.file }">
+    Reupload file
+  </button>
 </template>
 
 <script>
@@ -174,5 +177,10 @@ export default {
 
 span {
   margin: auto;
+}
+.disabled-button {
+  background-color: lightgrey;
+  color: grey;
+  pointer-events: none;
 }
 </style>
