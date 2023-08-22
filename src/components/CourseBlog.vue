@@ -56,12 +56,14 @@ export default {
       })
     },
     showForm() {
+      const currentYear = new Date().getFullYear()
+      const baseYear = 2019
       Swal.fire({
         title: 'Edit Course',
         html: `
-          <input id="course_id" class="swal2-input" placeholder="Course ID">
-          <input id="course_name" class="swal2-input" placeholder="Course Name">
-          <input id="year" class="swal2-input" placeholder="Year">
+        <input id="course_id" class="swal2-input numeric-input" type="text" placeholder="Course ID" maxlength="6">
+    <input id="course_name" class="swal2-input" placeholder="Course Name" maxlength="50">
+    <input id="year" class="swal2-input numeric-input" type="text" placeholder="Year" maxlength="4">
           <select id="examination" class="swal2-select">
             <option value="midterm">Midterm</option>
             <option value="final">Final</option>
@@ -78,7 +80,7 @@ export default {
           const examination =
             Swal.getPopup().querySelector('#examination').value
           const professor = this.GStore.user.firstname_EN
-
+          const numericRegex = /^\d+$/
           if (
             !course_id ||
             !course_name ||
@@ -87,6 +89,30 @@ export default {
             !professor
           ) {
             Swal.showValidationMessage('Please fill in all fields')
+            return false
+          } else if (
+            !course_id.match(numericRegex) ||
+            !year.match(numericRegex)
+          ) {
+            Swal.showValidationMessage(
+              'Please enter a valid numeric value for Course ID and Year'
+            )
+            return false
+          } else if (course_id.length !== 6) {
+            Swal.showValidationMessage('Course ID must be 6 digits long')
+            return false
+          } else if (year.length !== 4) {
+            Swal.showValidationMessage('Year must be 4 digits long')
+            return false
+          } else if (parseInt(year) > currentYear) {
+            Swal.showValidationMessage(
+              'Year cannot be more than ' + currentYear
+            )
+            return false
+          } else if (parseInt(year) < baseYear) {
+            Swal.showValidationMessage(
+              'Year cannot be earlier than ' + baseYear
+            )
             return false
           }
 
