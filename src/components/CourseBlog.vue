@@ -6,18 +6,23 @@
     }"
   >
     <div class="block">
-      <span>
-        Course ID: {{ detail.course_id }} Course Name:
-        {{ detail.course_name }} Examination: {{ detail.examination }} Year:
-        {{ detail.year }}
-        {{ detail.file }}
-      </span>
+      <div id="block">{{ detail.course_id }}</div>
+      <div id="block">{{ detail.course_name }}</div>
+      <div id="block">{{ detail.year }}</div>
+      <div id="block">
+        {{ detail.examination.charAt(0).toUpperCase()
+        }}{{ detail.examination.slice(1) }}
+      </div>
+      <div id="block">
+        {{ detail.professor.charAt(0)
+        }}{{ detail.professor.slice(1).toLowerCase() }}
+      </div>
     </div>
   </router-link>
-  <button @click="showForm">Edit detail</button>
-  <button @click="deleteCourse">Delete</button>
-  <button @click="reUploadFile" :class="{ 'disabled-button': !detail.file }">
-    Reupload file
+  <button class="coursebtn" id="edit" @click="showForm">Edit</button>
+  <button class="coursebtn" id="delete" @click="deleteCourse">Delete</button>
+  <button class="coursebtn" id="reupload" @click="reUploadFile">
+    Reupload
   </button>
 </template>
 
@@ -175,17 +180,51 @@ export default {
 
 <style scoped>
 .block {
-  outline-style: solid;
-  margin-bottom: 50px;
-  height: 50px;
-  width: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 1360px;
+  background: rgb(245, 250, 247);
+  margin: auto;
+  margin-bottom: 10px;
+  box-shadow: 1px 1px 1px 1px rgb(197, 193, 193);
 }
 
-span {
-  margin: auto;
+#block {
+  width: 270px;
+  height: 50px;
+  display: inline-block;
+  line-height: 50px;
+  font-weight: 400;
+  color: black;
+}
+
+.coursebtn {
+  width: 100px;
+  height: 25px;
+  margin: 0 5px 30px;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  border: 1px solid grey;
+  border-radius: 5px;
+  font-weight: 300;
+}
+
+#edit {
+  color: white;
+  background: rgb(27, 153, 27);
+}
+
+#delete {
+  color: white;
+  background: rgb(238, 49, 49);
+}
+
+#reupload {
+  color: white;
+  background: rgb(35, 35, 226);
+}
+
+#edit:hover,
+#delete:hover,
+#reupload:hover {
+  box-shadow: 1px 1px 1px 1px rgb(197, 193, 193);
 }
 .disabled-button {
   background-color: lightgrey;

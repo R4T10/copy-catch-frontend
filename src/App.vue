@@ -82,20 +82,11 @@ body {
   color: #2c3e50;
 }
 
-h1 {
-  width: 100%;
-  height: 80px;
-  background: #04724d;
-  margin: 0 0 80px;
-}
-p {
-  margin: 0 0 80px;
-}
 .block-nav {
   width: 100%;
   height: 80px;
   background: #04724d;
-  margin: 0 0 80px;
+  margin: 0 0 40px;
 }
 
 .logo-icon {
