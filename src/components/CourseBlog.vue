@@ -36,14 +36,23 @@ export default {
   },
   methods: {
     deleteCourse() {
-      const formData = new FormData()
-      formData.append('id', this.detail.id)
-      CourseService.delete_course(formData)
-      const name = this.GStore.user.firstname_EN
-      const courseFormData = new FormData()
-      courseFormData.append('name', name)
-      CourseService.get_course(courseFormData).then((response) => {
-        this.GStore.course = response.data
+      Swal.fire({
+        title: 'Are you sure to delete this course?',
+        showDenyButton: true,
+        confirmButtonText: 'Confirm',
+        denyButtonText: `Cancel`
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const formData = new FormData()
+          formData.append('id', this.detail.id)
+          CourseService.delete_course(formData)
+          const name = this.GStore.user.firstname_EN
+          const courseFormData = new FormData()
+          courseFormData.append('name', name)
+          CourseService.get_course(courseFormData).then((response) => {
+            this.GStore.course = response.data
+          })
+        }
       })
     },
     reUploadFile() {
