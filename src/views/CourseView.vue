@@ -96,20 +96,20 @@ export default {
             )
             return false
           } else if (course_id.length !== 6) {
-            Swal.showValidationMessage('Course ID must be 6 digits long')
+            Swal.showValidationMessage(
+              'Course ID must be a 6-digit numeric value'
+            )
             return false
           } else if (year.length !== 4) {
-            Swal.showValidationMessage('Year must be 4 digits long')
+            Swal.showValidationMessage('Year must be a 4-digit numeric value')
             return false
           } else if (parseInt(year) > currentYear) {
             Swal.showValidationMessage(
-              'Year cannot be more than ' + currentYear
+              'Year cannot be greater than ' + currentYear
             )
             return false
           } else if (parseInt(year) < baseYear) {
-            Swal.showValidationMessage(
-              'Year cannot be earlier than ' + baseYear
-            )
+            Swal.showValidationMessage('Year cannot be less than ' + baseYear)
             return false
           }
 
