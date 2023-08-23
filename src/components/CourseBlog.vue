@@ -14,16 +14,20 @@
         }}{{ detail.examination.slice(1) }}
       </div>
       <div id="block">
-        {{ detail.professor.charAt(0)
-        }}{{ detail.professor.slice(1).toLowerCase() }}
+        <button class="coursebtn" @click.prevent="showForm">Edit</button>
+        <button
+          class="coursebtn"
+          :class="{ 'disabled-button': !detail.file }"
+          @click.prevent="reUploadFile"
+        >
+          Reupload
+        </button>
+        <button class="coursebtn" id="delete" @click.prevent="deleteCourse">
+          Delete
+        </button>
       </div>
     </div>
   </router-link>
-  <button class="coursebtn" id="edit" @click="showForm">Edit</button>
-  <button class="coursebtn" id="delete" @click="deleteCourse">Delete</button>
-  <button class="coursebtn" id="reupload" @click="reUploadFile">
-    Reupload
-  </button>
 </template>
 
 <script>
@@ -180,55 +184,51 @@ export default {
 
 <style scoped>
 .block {
-  width: 1360px;
   background: rgb(245, 250, 247);
   margin: auto;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   box-shadow: 1px 1px 1px 1px rgb(197, 193, 193);
+  border-radius: 5px;
+  height: 40px;
+}
+
+.block:hover {
+  box-shadow: 2px 2px 2px 2px rgb(197, 193, 193);
 }
 
 #block {
   width: 270px;
-  height: 50px;
+  height: 40px;
+  margin: 0 3px;
   display: inline-block;
-  line-height: 50px;
   font-weight: 400;
   color: black;
 }
 
 .coursebtn {
-  width: 100px;
+  width: 70px;
   height: 25px;
-  margin: 0 5px 30px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   border: 1px solid grey;
-  border-radius: 5px;
+  border-radius: 8px;
   font-weight: 300;
-}
-
-#edit {
-  color: white;
-  background: rgb(27, 153, 27);
-}
-
-#delete {
-  color: white;
-  background: rgb(238, 49, 49);
-}
-
-#reupload {
-  color: white;
-  background: rgb(35, 35, 226);
-}
-
-#edit:hover,
-#delete:hover,
-#reupload:hover {
+  margin: 7.5px 5px;
+  background: rgb(255, 208, 0);
   box-shadow: 1px 1px 1px 1px rgb(197, 193, 193);
 }
+
 .disabled-button {
   background-color: lightgrey;
   color: grey;
   pointer-events: none;
+}
+
+#delete {
+  color: white;
+  background: rgb(225, 13, 13);
+}
+
+.coursebtn:hover {
+  box-shadow: 2px 2px 2px 2px rgb(197, 193, 193);
 }
 </style>
