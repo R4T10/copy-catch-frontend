@@ -40,7 +40,7 @@ export default {
   methods: {
     sendEmail() {
       const formData = {
-        receive_name: GStore.compareDetail.name
+        receiver_name: GStore.compareDetail.name
       }
       console.log(formData)
       Swal.fire({
