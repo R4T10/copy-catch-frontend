@@ -1,18 +1,32 @@
 <template>
   <div v-if="GStore.course" class="home">
-    <input type="text" v-model="searchQuery" placeholder="Enter search query" />
-    <button @click="showForm">Adding Course</button>
+    <input
+      class="searchbar"
+      type="text"
+      v-model="searchQuery"
+      placeholder="Search Year"
+    />
 
-    <div v-if="GStore.course">
+    <table class="label">
+      <th>Course ID</th>
+      <th>Course Name</th>
+      <th>Year</th>
+      <th>Examination</th>
+      <th>Professor</th>
+    </table>
+
+    <div class="course" v-if="GStore.course">
       <CourseBlog
         v-for="detail in filteredData"
         :key="detail.id"
         :detail="detail"
       >
       </CourseBlog>
-      <h2>User Information:</h2>
-      <pre>{{ GStore.user }}</pre>
     </div>
+
+    <button class="addbtn" @click="showForm">+</button>
+    <h2>User Information:</h2>
+    <pre>{{ GStore.user }}</pre>
   </div>
 </template>
 
@@ -201,3 +215,53 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.searchbar {
+  width: 30%;
+  height: 25px;
+  padding: 5px;
+  margin: 0 0 40px;
+  border: 1.5px solid black;
+  border-radius: 5px;
+}
+
+.label {
+  margin: auto;
+  background: #072a6c;
+}
+
+th {
+  width: 250px;
+  height: 30px;
+  padding: 13px 10px 7px;
+  color: white;
+  font-weight: 500;
+}
+
+.course {
+  margin: 30px;
+}
+
+.addbtn {
+  display: block;
+  margin: auto;
+  margin-bottom: 20px;
+  width: 1360px;
+  height: 40px;
+  border: none;
+  border-radius: 0;
+  background: rgb(222, 222, 222);
+  box-shadow: 1px 1px 1px 1px rgb(197, 193, 193);
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.addbtn:hover {
+  color: white;
+  background: rgb(139, 139, 139);
+  border-radius: 5px;
+}
+</style>
