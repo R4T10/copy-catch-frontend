@@ -1,11 +1,14 @@
 <template>
-  <span
-    >Course ID: {{ GStore.detail.course_id }} Course Name:
-    {{ GStore.detail.course_name }} Examination:{{
-      GStore.detail.examination
-    }}
-    Year:{{ GStore.detail.year }}</span
-  >
+  <div class="course">
+    <div class="coursedetail">{{ GStore.detail.course_id }}</div>
+    <div class="coursedetail">{{ GStore.detail.course_name }}</div>
+    <div class="coursedetail">{{ GStore.detail.year }}</div>
+    <div class="coursedetail">
+      {{ GStore.detail.examination.charAt(0).toUpperCase()
+      }}{{ GStore.detail.examination.slice(1) }}
+    </div>
+  </div>
+
   <DragDrop></DragDrop>
 </template>
 <script>
@@ -17,3 +20,15 @@ export default {
   }
 }
 </script>
+<style scoped>
+.course {
+  margin-bottom: 30px;
+}
+
+.coursedetail {
+  font-size: 20px;
+  display: inline;
+  padding: 0 20px;
+  font-weight: bold;
+}
+</style>

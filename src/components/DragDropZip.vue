@@ -12,7 +12,7 @@
         @change="handleFileSelect"
       />
     </label>
-    <p>Drag and drop a .zip file here or click icon to select a file</p>
+    <p>Drag and drop a file here or click on the icon to select a file</p>
     <button @click="confirmFile" v-if="selectedFile" id="uploadbtn">
       Upload
     </button>

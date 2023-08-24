@@ -1,45 +1,61 @@
 <template>
-  <div class="navbtn">
-    <button @click="go_to_student" id="uploadbtn" style="color: black">
-      Student
-    </button>
-    <button @click="go_to_google" id="uploadbtn">Google Search</button>
-    <button @click="go_to_student_list" id="uploadbtn">Student List</button>
+  <div class="course">
+    <div class="coursedetail">{{ GStore.detail.course_id }}</div>
+    <div class="coursedetail">{{ GStore.detail.course_name }}</div>
+    <div class="coursedetail">{{ GStore.detail.year }}</div>
+    <div class="coursedetail">
+      {{ GStore.detail.examination.charAt(0).toUpperCase()
+      }}{{ GStore.detail.examination.slice(1) }}
+    </div>
   </div>
-  <span
-    >Course ID: {{ GStore.detail.course_id }} Course Name:
-    {{ GStore.detail.course_name }} Examination:{{
-      GStore.detail.examination
-    }}
-    Year:{{ GStore.detail.year }}</span
-  >
-  <table v-if="GStore.google_result.question != null">
-    <tr>
-      <th></th>
-      <th v-for="question in GStore.google_result.question" :key="question">
-        {{ question }}
-      </th>
-    </tr>
-    <tr
-      v-for="(result, rowIndex) in GStore.google_result.data"
-      :key="result.student_id"
-    >
-      <td>{{ result.student_id }}</td>
-      <td
-        v-for="(percentage, index) in result.answers"
-        :key="index"
-        @click="dataView(rowIndex, index, percentage)"
+
+  <div>
+    <div class="navbtn">
+      <button @click="go_to_student" id="tab">Student's Answer</button>
+      <button
+        @click="go_to_google"
+        id="tab"
+        style="background: rgb(255, 208, 0)"
+        :class="{ 'is-disabled': isDisabled }"
       >
-        {{ percentage.percentage }}
-      </td>
-    </tr>
-  </table>
+        Google Search
+      </button>
+      <button @click="go_to_student_list" id="tab">Student List</button>
+    </div>
+
+    <table v-if="GStore.google_result.question != null">
+      <tr>
+        <th></th>
+        <th v-for="question in GStore.google_result.question" :key="question">
+          {{ question }}
+        </th>
+      </tr>
+      <tr
+        v-for="(result, rowIndex) in GStore.google_result.data"
+        :key="result.student_id"
+      >
+        <td>{{ result.student_id }}</td>
+        <td
+          v-for="(percentage, index) in result.answers"
+          :key="index"
+          @click="dataView(rowIndex, index, percentage)"
+        >
+          {{ percentage.percentage }}
+        </td>
+      </tr>
+    </table>
+  </div>
 </template>
 <script>
 import router from '../router'
 import GStore from '@/store'
 export default {
   inject: ['GStore'],
+  data() {
+    return {
+      isDisabled: true
+    }
+  },
   methods: {
     go_to_student() {
       router.push({
@@ -89,33 +105,44 @@ export default {
 }
 </script>
 <style scoped>
+.coursedetail {
+  font-size: 20px;
+  display: inline;
+  padding: 0 20px;
+  font-weight: bold;
+}
+
+.navbtn {
+  margin-top: 30px;
+  width: 100%;
+}
+
+#tab {
+  width: 150px;
+  height: 30px;
+  color: white;
+  background: #1c499e;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  margin: 0 5px 10px;
+  box-shadow: 1px 1px 1px 1px rgb(197, 193, 193);
+}
+
+#tab:hover {
+  box-shadow: 2px 2px 2px 2px rgb(197, 193, 193);
+}
+
 table {
   margin: auto;
   margin-bottom: 100px;
-  padding-top: 30px;
 }
 
 th {
   background: #072a6c;
   color: white;
-  font-weight: 100;
+  font-weight: 500;
   text-align: center;
-}
-
-.navbtn {
-  position: absolute;
-  top: 70;
-  right: 0;
-}
-
-#uploadbtn {
-  width: 150px;
-  height: 30px;
-  color: white;
-  background: #04724d;
-  border: none;
-  font-weight: bold;
-  margin-left: 2px;
 }
 
 th,
@@ -126,5 +153,13 @@ td {
 tr {
   border-top: 1px solid #161240;
   background: rgb(245, 250, 247);
+}
+
+#percentage:hover {
+  box-shadow: 1px 1px 1px 1px rgb(197, 193, 193);
+}
+
+#tab.is-disabled {
+  pointer-events: none;
 }
 </style>

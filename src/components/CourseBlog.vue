@@ -213,7 +213,7 @@ export default {
   border-radius: 8px;
   font-weight: 300;
   margin: 7.5px 5px;
-  background: rgb(255, 208, 0);
+  background: rgb(245, 250, 247);
   box-shadow: 1px 1px 1px 1px rgb(197, 193, 193);
 }
 
@@ -225,7 +225,7 @@ export default {
 
 #delete {
   color: white;
-  background: rgb(225, 13, 13);
+  background: rgb(234, 47, 47);
 }
 
 .coursebtn:hover {

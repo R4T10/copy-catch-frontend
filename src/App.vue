@@ -9,7 +9,11 @@
       {{ GStore.user.cmuitaccount_name.charAt(0).toUpperCase() }}
     </button>
     <div class="dropdown" v-if="showDropdown" @mouseleave="closeDropdown">
-      <div v-if="GStore.user" class="dropdown-item">
+      <div
+        v-if="GStore.user"
+        class="dropdown-item"
+        :class="{ 'is-disabled': isDisabled }"
+      >
         {{
           GStore.user
             ? GStore.user.firstname_EN + ' ' + GStore.user.lastname_EN
@@ -34,7 +38,8 @@ export default {
   inject: ['GStore'],
   data() {
     return {
-      showDropdown: false
+      showDropdown: false,
+      isDisabled: true
     }
   },
 
@@ -142,5 +147,13 @@ body {
   list-style: none;
   padding: 15px 40px;
   border-top: 1px solid white;
+}
+
+.dropdown-item:hover {
+  box-shadow: 1px 1px 1px 1px rgb(166, 163, 163);
+}
+
+.dropdown-item.is-disabled {
+  pointer-events: none;
 }
 </style>
