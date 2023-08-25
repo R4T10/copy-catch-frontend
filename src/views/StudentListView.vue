@@ -111,21 +111,21 @@ export default {
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel',
         preConfirm: () => {
-          const mail =
-            Swal.getPopup().querySelector('#student_mail').value + '@cmu.ac.th'
+          const mail = Swal.getPopup().querySelector('#student_mail').value
 
           if (!mail) {
             Swal.showValidationMessage('Please fill the email')
             return false
+          } else {
+            const mail_cmu = mail + '@cmu.ac.th'
+            return { student_id, student_name, mail_cmu }
           }
-
-          return { student_id, student_name, mail }
         }
       }).then((result) => {
         if (result.isConfirmed) {
           console.log(result)
-          const { student_id, student_name, mail } = result.value
-          this.submitEmail(student_id, student_name, mail)
+          const { student_id, student_name, mail_cmu } = result.value
+          this.submitEmail(student_id, student_name, mail_cmu)
         }
       })
     },
