@@ -65,7 +65,7 @@ export default {
       const currentYear = new Date().getFullYear()
       const baseYear = 2019
       Swal.fire({
-        title: 'Adding Course',
+        title: 'Add a course',
         html: `
     <input id="course_id" class="swal2-input numeric-input" type="text" placeholder="Course ID" maxlength="6">
     <input id="course_name" class="swal2-input" placeholder="Course Name" maxlength="50">
