@@ -1,13 +1,15 @@
 <template>
   <div>
-    {{ GStore.compareDetail.question }}
-    <br />
-    {{ GStore.compareDetail.name }}
-    <br />
-    {{ GStore.compareDetail.answer }}
-    <h2>similar answer</h2>
+    <h2>question_number {{ GStore.compareDetail.question }}</h2>
+    <button @click="sendEmail">Send the email</button>
+    <div class="answerbox">
+      <h3>student_id {{ GStore.compareDetail.name }}</h3>
+      <p>{{ GStore.compareDetail.answer }}</p>
+    </div>
+    <h2>Plagiarism Detected</h2>
     <div v-if="GStore.compareDetail.check_table == 'student'">
       <div
+        class="rankbox"
         v-for="compare_data in GStore.compareDetail.compare_data"
         :key="compare_data"
       >
@@ -28,7 +30,6 @@
         <a :href="compare_data.link"> {{ compare_data.link }} </a>
       </div>
     </div>
-    <button @click="sendEmail">Send the email</button>
   </div>
 </template>
 <script>
@@ -69,3 +70,36 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+h2 {
+  text-align: left;
+  padding: 0 50px;
+}
+
+button {
+  display: block;
+  top: 0;
+  right: 0;
+}
+
+.answerbox {
+  width: 90%;
+  height: 200px;
+  border: 1px solid gray;
+  margin: auto;
+  text-align: left;
+  padding: 0 20px;
+  margin-bottom: 50px;
+}
+
+.rankbox {
+  width: 90%;
+  height: 100px;
+  border: 1px solid gray;
+  margin: auto;
+  text-align: left;
+  padding: 0 20px;
+  margin-bottom: 30px;
+}
+</style>
