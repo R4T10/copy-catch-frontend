@@ -3,7 +3,9 @@
     <h2>question_number {{ GStore.compareDetail.question }}</h2>
     <button @click="sendEmail">Send the email</button>
     <div class="answerbox">
-      <h3>student_id {{ GStore.compareDetail.name }}</h3>
+      <h3>
+        {{ GStore.compareDetail.student_id }} {{ GStore.compareDetail.name }}
+      </h3>
       <p>{{ GStore.compareDetail.answer }}</p>
     </div>
     <h2>Plagiarism Detected</h2>
@@ -14,6 +16,7 @@
         :key="compare_data"
       >
         <span>
+          {{ compare_data.student_id }} <br />
           {{ compare_data.student_name }} <br />
           {{ compare_data.answer }}
         </span>

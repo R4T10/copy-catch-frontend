@@ -89,14 +89,17 @@ export default {
       const name = GStore.result.data[rowIndex].student_name
       const answer = GStore.result.data[rowIndex].answers[index].answer
       const question = GStore.result.data[rowIndex].answers[index].question_text
+      const student_id = GStore.result.data[rowIndex].student_id
       console.log(name)
       console.log(answer)
       console.log(comparison_data)
+      console.log(student_id)
       GStore.compareDetail = {
         name: name,
         answer: answer,
         compare_data: comparison_data,
         question: question,
+        student_id: student_id,
         check_table: 'student'
       }
       if (percentage.percentage > 0) {
