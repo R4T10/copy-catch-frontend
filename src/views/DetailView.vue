@@ -49,7 +49,7 @@ export default {
   methods: {
     sendEmail() {
       const formData = {
-        receiver_name: GStore.compareDetail.name
+        student_id: GStore.compareDetail.student_id
       }
       console.log(formData)
       Swal.fire({
