@@ -35,7 +35,7 @@
     >
       <div>
         <h3>{{ compare_data.snippet }}</h3>
-        <a :href="compare_data.link"> {{ compare_data.link }} </a>
+        <a :href="compare_data.link" target="_blank">{{ compare_data.link }}</a>
       </div>
     </div>
   </div>
