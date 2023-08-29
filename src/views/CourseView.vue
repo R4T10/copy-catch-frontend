@@ -85,15 +85,14 @@ export default {
           const year = Swal.getPopup().querySelector('#year').value
           const examination =
             Swal.getPopup().querySelector('#examination').value
-          const professor = this.GStore.user.firstname_EN
-
+          const professor_email = this.GStore.user.cmuitaccount
           const numericRegex = /^\d+$/
           if (
             !course_id ||
             !course_name ||
             !year ||
             !examination ||
-            !professor
+            !professor_email
           ) {
             Swal.showValidationMessage('Please fill in all fields')
             return false
@@ -123,36 +122,36 @@ export default {
             return false
           }
 
-          return { course_id, course_name, year, examination, professor }
+          return { course_id, course_name, year, examination, professor_email }
         }
       }).then((result) => {
         if (result.isConfirmed) {
-          const { course_id, course_name, year, examination, professor } =
+          const { course_id, course_name, year, examination, professor_email } =
             result.value
           this.submitCourse(
             course_id,
             course_name,
             year,
             examination,
-            professor
+            professor_email
           )
         }
       })
     },
-    submitCourse(course_id, course_name, year, examination, professor) {
+    submitCourse(course_id, course_name, year, examination, professor_email) {
       const formData = {
         course_id,
         course_name,
         year,
         examination,
-        professor
+        professor_email
       }
       // console.log(formData)
       CourseService.add_course(formData)
         .then(() => {
-          const name = this.GStore.user.firstname_EN
+          const professor_email = this.GStore.user.cmuitaccount
           const courseFormData = new FormData()
-          courseFormData.append('name', name)
+          courseFormData.append('professor_email', professor_email)
           CourseService.get_course(courseFormData).then((response) => {
             this.GStore.course = response.data
           })
@@ -166,9 +165,9 @@ export default {
       LoginService.fetchUserInfo(access_token)
         .then((response) => {
           this.GStore.user = response.data
-          const name = this.GStore.user.firstname_EN
+          const professor_email = this.GStore.user.cmuitaccount
           const courseFormData = new FormData()
-          courseFormData.append('name', name)
+          courseFormData.append('professor_email', professor_email)
           CourseService.get_course(courseFormData).then((response) => {
             this.GStore.course = response.data
             Swal.close()
