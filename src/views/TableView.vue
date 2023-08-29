@@ -89,6 +89,8 @@ export default {
       const name = GStore.result.data[rowIndex].student_name
       const answer = GStore.result.data[rowIndex].answers[index].answer
       const question = GStore.result.data[rowIndex].answers[index].question_text
+      const question_number =
+        GStore.result.data[rowIndex].answers[index].question
       const student_id = GStore.result.data[rowIndex].student_id
       console.log(name)
       console.log(answer)
@@ -97,6 +99,7 @@ export default {
       GStore.compareDetail = {
         name: name,
         answer: answer,
+        question_number: question_number,
         compare_data: comparison_data,
         question: question,
         student_id: student_id,

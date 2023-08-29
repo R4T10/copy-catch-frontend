@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h2>question_number {{ GStore.compareDetail.question }}</h2>
+    <h2>
+      {{ GStore.compareDetail.question_number }}
+      {{ GStore.compareDetail.question }}
+    </h2>
     <button @click="sendEmail">Send the email</button>
     <div class="answerbox">
       <h3>
