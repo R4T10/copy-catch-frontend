@@ -55,7 +55,7 @@ export default {
           const formData = new FormData()
           formData.append('id', this.detail.id)
           CourseService.delete_course(formData)
-          const professor_email = this.GStore.user.firstname_EN
+          const professor_email = this.GStore.user.cmuitaccount
           const courseFormData = new FormData()
           courseFormData.append('professor_email', professor_email)
           CourseService.get_course(courseFormData).then((response) => {
@@ -79,12 +79,16 @@ export default {
     showForm() {
       const currentYear = new Date().getFullYear()
       const baseYear = 2019
+      const course_id = this.detail.course_id
+      const course_name = this.detail.course_name
+      const year = this.detail.year
+
       Swal.fire({
         title: 'Edit a course',
         html: `
-        <input id="course_id" class="swal2-input numeric-input" type="text" placeholder="Course ID" maxlength="6">
-    <input id="course_name" class="swal2-input" placeholder="Course Name" maxlength="50">
-    <input id="year" class="swal2-input numeric-input" type="text" placeholder="Year" maxlength="4">
+        <input id="course_id" class="swal2-input numeric-input" type="text" value="${course_id}"" maxlength="6">
+    <input id="course_name" class="swal2-input"  value="${course_name}"" maxlength="50">
+    <input id="year" class="swal2-input numeric-input" type="text" value="${year}""  maxlength="4">
           <select id="examination" class="swal2-select">
             <option value="midterm">Midterm</option>
             <option value="final">Final</option>
