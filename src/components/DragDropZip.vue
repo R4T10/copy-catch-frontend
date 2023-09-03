@@ -76,23 +76,34 @@ export default {
                     console.log(response.data)
                     console.log(this.formData)
                     Swal.hideLoading()
-                    Swal.fire('Upload success', '', 'success')
-                    const professor_email = this.GStore.user.cmuitaccount
-                    const courseFormData = new FormData()
-                    courseFormData.append('professor_email', professor_email)
-                    CourseService.get_course(courseFormData)
-                      .then((response) => {
-                        GStore.course = response.data
-                        console.log(GStore.course)
-                        console.log(GStore.detail)
-                        router.push({
-                          name: 'table',
-                          params: { id: GStore.detail.id }
-                        })
-                      })
-                      .catch((error) => {
-                        console.error('Failed to fetch course data:', error)
-                      })
+                    Swal.fire('Upload success', '', 'success').then(
+                      (result) => {
+                        if (result.isConfirmed) {
+                          const professor_email = this.GStore.user.cmuitaccount
+                          const courseFormData = new FormData()
+                          courseFormData.append(
+                            'professor_email',
+                            professor_email
+                          )
+                          CourseService.get_course(courseFormData)
+                            .then((response) => {
+                              GStore.course = response.data
+                              console.log(GStore.course)
+                              console.log(GStore.detail)
+                              router.push({
+                                name: 'table',
+                                params: { id: GStore.detail.id }
+                              })
+                            })
+                            .catch((error) => {
+                              console.error(
+                                'Failed to fetch course data:',
+                                error
+                              )
+                            })
+                        }
+                      }
+                    )
                   })
                   .catch((error) => {
                     console.log(error.response.data)
