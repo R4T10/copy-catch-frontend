@@ -47,14 +47,14 @@ export default {
     },
     handleFiles(files) {
       const file = files[0]
-      if (file && file.name.endsWith('.zip')) {
-        this.selectedFile = file
-        this.formData = new FormData()
-        this.formData.append('file', file)
-        this.formData.append('id', GStore.detail.id)
-      } else {
-        Swal.fire('Invalid file type', '', 'error')
-      }
+      // if (file && file.name.endsWith('.zip')) {
+      this.selectedFile = file
+      this.formData = new FormData()
+      this.formData.append('file', file)
+      this.formData.append('id', GStore.detail.id)
+      //   } else {
+      //     Swal.fire('Invalid file type', '', 'error')
+      // }
     },
     confirmFile() {
       Swal.fire({
@@ -94,9 +94,15 @@ export default {
                         console.error('Failed to fetch course data:', error)
                       })
                   })
-                  .catch(() => {
-                    Swal.hideLoading()
-                    Swal.fire('Invalid file format', '', 'warning')
+                  .catch((error) => {
+                    console.log(error.response.data)
+                    if (error.response.data == 'Invalid file format') {
+                      Swal.hideLoading()
+                      Swal.fire('Invalid file format', '', 'warning')
+                    } else {
+                      Swal.hideLoading()
+                      Swal.fire('Invalid file type', '', 'warning')
+                    }
                   })
               }
               if (GStore.detail.file == true) {
@@ -124,9 +130,15 @@ export default {
                         console.error('Failed to fetch course data:', error)
                       })
                   })
-                  .catch(() => {
-                    Swal.hideLoading()
-                    Swal.fire('Invalid file format', '', 'warning')
+                  .catch((error) => {
+                    console.log(error.response.data)
+                    if (error.response.data == 'Invalid file format') {
+                      Swal.hideLoading()
+                      Swal.fire('Invalid file format', '', 'warning')
+                    } else {
+                      Swal.hideLoading()
+                      Swal.fire('Invalid file type', '', 'warning')
+                    }
                   })
               }
             }

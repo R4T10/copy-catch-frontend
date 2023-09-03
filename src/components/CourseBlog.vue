@@ -50,19 +50,28 @@ export default {
         showDenyButton: true,
         confirmButtonText: 'Confirm',
         denyButtonText: `Cancel`
-      }).then((result) => {
-        if (result.isConfirmed) {
-          const formData = new FormData()
-          formData.append('id', this.detail.id)
-          CourseService.delete_course(formData)
-          const professor_email = this.GStore.user.cmuitaccount
-          const courseFormData = new FormData()
-          courseFormData.append('professor_email', professor_email)
-          CourseService.get_course(courseFormData).then((response) => {
-            this.GStore.course = response.data
-          })
-        }
       })
+        .then((result) => {
+          if (result.isConfirmed) {
+            const formData = new FormData()
+            formData.append('id', this.detail.id)
+            CourseService.delete_course(formData).then((response) => {
+              if (response.status == 200) {
+                Swal.fire('Delete success', '', 'success')
+                const professor_email = this.GStore.user.cmuitaccount
+                const courseFormData = new FormData()
+                courseFormData.append('professor_email', professor_email)
+                CourseService.get_course(courseFormData).then((response) => {
+                  this.GStore.course = response.data
+                })
+              }
+            })
+          }
+        })
+        .catch((error) => {
+          Swal.fire('Error', 'Course not found', 'error')
+          console.error(error)
+        })
     },
     reUploadFile() {
       Swal.fire({
@@ -176,16 +185,19 @@ export default {
       }
       // console.log(formData)
       CourseService.edit_course(formData)
-        .then(() => {
-          const professor_email = this.GStore.user.cmuitaccount
-          const courseFormData = new FormData()
-          courseFormData.append('professor_email', professor_email)
-          CourseService.get_course(courseFormData).then((response) => {
-            this.GStore.course = response.data
-          })
+        .then((response) => {
+          if (response.status == 200) {
+            Swal.fire('Edit success', '', 'success')
+            const professor_email = this.GStore.user.cmuitaccount
+            const courseFormData = new FormData()
+            courseFormData.append('professor_email', professor_email)
+            CourseService.get_course(courseFormData).then((response) => {
+              this.GStore.course = response.data
+            })
+          }
         })
         .catch((error) => {
-          Swal.fire('Error', 'Failed to edit course', 'error')
+          Swal.fire('Error', 'Course already exists', 'error')
           console.error(error)
         })
     }

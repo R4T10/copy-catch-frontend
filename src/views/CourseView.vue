@@ -148,16 +148,19 @@ export default {
       }
       // console.log(formData)
       CourseService.add_course(formData)
-        .then(() => {
-          const professor_email = this.GStore.user.cmuitaccount
-          const courseFormData = new FormData()
-          courseFormData.append('professor_email', professor_email)
-          CourseService.get_course(courseFormData).then((response) => {
-            this.GStore.course = response.data
-          })
+        .then((response) => {
+          if (response.status == 200) {
+            Swal.fire('Add success', '', 'success')
+            const professor_email = this.GStore.user.cmuitaccount
+            const courseFormData = new FormData()
+            courseFormData.append('professor_email', professor_email)
+            CourseService.get_course(courseFormData).then((response) => {
+              this.GStore.course = response.data
+            })
+          }
         })
         .catch((error) => {
-          Swal.fire('Error', 'Failed to add course', 'error')
+          Swal.fire('Error', 'Course already exists', 'error')
           console.error(error)
         })
     },

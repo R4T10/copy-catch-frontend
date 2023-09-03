@@ -138,10 +138,15 @@ export default {
       }
       console.log(formData)
       StudentService.update_email(formData)
-        .then(() => {
-          StudentService.get_student_list(GStore.detail.id).then((response) => {
-            GStore.students = response.data
-          })
+        .then((response) => {
+          if (response.status == 200) {
+            Swal.fire('Update success', '', 'success')
+            StudentService.get_student_list(GStore.detail.id).then(
+              (response) => {
+                GStore.students = response.data
+              }
+            )
+          }
         })
         .catch((error) => {
           Swal.fire('Error', 'Failed to edit email', 'error')
