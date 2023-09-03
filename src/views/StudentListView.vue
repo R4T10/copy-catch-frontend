@@ -140,7 +140,7 @@ export default {
       StudentService.update_email(formData)
         .then((response) => {
           if (response.status == 200) {
-            Swal.fire('Update success', '', 'success')
+            Swal.fire('Update email success', '', 'success')
             StudentService.get_student_list(GStore.detail.id).then(
               (response) => {
                 GStore.students = response.data
