@@ -123,7 +123,7 @@ export default {
                     console.log(response.data)
                     console.log(this.formData)
                     Swal.hideLoading()
-                    Swal.fire('Re-upload success', '', 'success')
+                    Swal.fire('Upload success', '', 'success')
                     const professor_email = this.GStore.user.cmuitaccount
                     const courseFormData = new FormData()
                     courseFormData.append('professor_email', professor_email)
