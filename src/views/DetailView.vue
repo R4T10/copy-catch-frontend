@@ -49,8 +49,14 @@ export default {
   methods: {
     sendEmail() {
       const formData = {
-        student_id: GStore.compareDetail.student_id
+        student_id: GStore.compareDetail.student_id,
+        course_id: GStore.compareDetail.course_id,
+        course_name: GStore.compareDetail.course_name,
+        examination: GStore.compareDetail.examination
       }
+      console.log(GStore.compareDetail.course_id)
+      console.log(GStore.compareDetail.course_name)
+      console.log(GStore.compareDetail.examination)
       console.log(formData)
       Swal.fire({
         title: 'Processing',

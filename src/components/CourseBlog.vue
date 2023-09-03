@@ -99,8 +99,8 @@ export default {
     <input id="course_name" class="swal2-input"  value="${course_name}"" maxlength="50">
     <input id="year" class="swal2-input numeric-input" type="text" value="${year}""  maxlength="4">
           <select id="examination" class="swal2-select">
-            <option value="midterm">Midterm</option>
-            <option value="final">Final</option>
+            <option value="Midterm">Midterm</option>
+            <option value="Final">Final</option>
           </select>
         `,
         showCancelButton: true,

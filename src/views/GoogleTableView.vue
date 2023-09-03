@@ -4,8 +4,7 @@
     <div class="coursedetail">{{ GStore.detail.course_name }}</div>
     <div class="coursedetail">{{ GStore.detail.year }}</div>
     <div class="coursedetail">
-      {{ GStore.detail.examination.charAt(0).toUpperCase()
-      }}{{ GStore.detail.examination.slice(1) }}
+      {{ GStore.detail.examination }}
     </div>
   </div>
 
@@ -85,15 +84,24 @@ export default {
       const answer = GStore.result.data[rowIndex].answers[index].answer
       const question = GStore.result.data[rowIndex].answers[index].question_text
       const student_id = GStore.result.data[rowIndex].student_id
+      const course_id = GStore.detail.course_id
+      const course_name = GStore.detail.course_name
+      const examination = GStore.detail.examination
       console.log(name)
       console.log(answer)
       console.log(comparison_data)
+      console.log(course_id)
+      console.log(course_name)
+      console.log(examination)
       GStore.compareDetail = {
         name: name,
         answer: answer,
         compare_data: comparison_data,
         question: question,
         student_id: student_id,
+        course_id: course_id,
+        course_name: course_name,
+        examination: examination,
         check_table: 'google'
       }
       if (percentage.percentage > 0) {
