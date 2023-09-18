@@ -21,7 +21,12 @@
       :key="compare_data"
     >
       <div>
-        <h3>{{ compare_data.student_id }} {{ compare_data.student_name }}</h3>
+        <div>
+          <h3>{{ compare_data.student_id }} {{ compare_data.student_name }}</h3>
+        </div>
+        <div>
+          <h3>{{ compare_data.percentage }} %</h3>
+        </div>
         <p>{{ compare_data.answer }}</p>
       </div>
     </div>
