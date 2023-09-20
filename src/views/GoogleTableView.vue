@@ -3,9 +3,7 @@
     <div class="coursedetail">{{ GStore.detail.course_id }}</div>
     <div class="coursedetail">{{ GStore.detail.course_name }}</div>
     <div class="coursedetail">{{ GStore.detail.year }}</div>
-    <div class="coursedetail">
-      {{ GStore.detail.examination }}
-    </div>
+    <div class="coursedetail">{{ GStore.detail.examination }}</div>
   </div>
 
   <div>

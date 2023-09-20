@@ -1,17 +1,12 @@
 <template>
-  <div class="row">
-    <div class="col-md-6">
-      There is a high possibility of plagiarism in online exams. However, it is
-      difficult to check plagiarism by human effort as there are many questions
-      and answers from students on an exam and a professor must try to remember
-      the answers of each student to catch any plagiarism. If the professor
-      detect plagiarism between students, he or she examines the issue by
-      comparing each student’s answer one by one, which requires much effort.
-      The professor also spends plenty of time searching each student’s answer
-      on the internet to check whether the student copied things from other
-      websites.
-    </div>
-    <div class="col-md-6">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <div class="container">
+    <h2>COPY-CATCH</h2>
+    <img class="homeimg" src="@/assets/home.jpg" />
+    <div class="aboutus">
       Copy-Catch is a web application to check plagiarism of online exams that
       are conducted on the KC Moodle, which is a free and open-source learning
       management system that is used for blended learning, distance education,
@@ -20,22 +15,20 @@
       plagiarism and be able to mark exams conveniently regarding plagiarism.
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-4">Check plagiarism among students answers</div>
-    <div class="col-md-4">Check plagiarism with Google search</div>
-    <div class="col-md-4">Detect plagiarism from lots of answer files</div>
+  <div class="feature">
+    <div id="circle"><i class="fa fa-copy"></i></div>
+    <div id="explain">check plagiarism among students answers</div>
   </div>
-  <div>
-    <p>Aim</p>
-    <p>
-      1. To help professors who conduct exams on the KC Moodle check the
-      plagiarism of students’ answers
-    </p>
-    <p>2. To help professors reduce their effort and time to mark exams</p>
-    <p>
-      3. To help professors mark exams equitably to penalize the students who
-      plagiarized on their exams
-    </p>
+  <div class="feature">
+    <div id="explain">check plagiarism with Google search</div>
+    <div id="circle"><i class="fa fa-google"></i></div>
+  </div>
+  <div class="feature">
+    <div id="circle"><i class="fa fa-envelope"></i></div>
+    <div id="explain">
+      send email to students to inform <br />
+      them their answer has been considered plagiarism
+    </div>
   </div>
 </template>
 
@@ -59,3 +52,61 @@ export default {
   }
 }
 </script>
+<style scoped>
+body {
+  background: rgb(245, 250, 247);
+}
+
+.container {
+  position: relative;
+  text-align: center;
+}
+
+.homeimg {
+  width: 60%;
+}
+
+.aboutus {
+  text-align: justify;
+  font-size: 18px;
+  margin-bottom: 20px;
+  padding: 30px 250px;
+}
+
+#title {
+  font-weight: bold;
+}
+
+.feature {
+  padding: 30px 300px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#circle {
+  border-radius: 50%;
+  background: #04724d;
+  font-size: 60px;
+  color: white;
+  width: 150px;
+  height: 150px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#explain {
+  text-align: center;
+  font-size: 18px;
+  margin: auto;
+  font-weight: bold;
+  border: 1px solid #04724d;
+  border-radius: 5px;
+  width: 600px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>

@@ -1,13 +1,6 @@
 <template>
-  <!-- <link
-    rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-  /> -->
   <div class="block-nav">
     <img class="logo-icon" src="@/assets/logo.png" @click="home" />
-    <!-- <button class="user" v-if="GStore.user != null" @click="logout">
-      {{ GStore.user.cmuitaccount_name.charAt(0).toUpperCase() }}
-    </button> -->
 
     <button class="user" v-if="GStore.user != null" @click="toggleDropdown">
       {{ GStore.user.cmuitaccount_name.charAt(0).toUpperCase() }}
@@ -140,9 +133,19 @@ body {
   position: absolute;
   top: 80px;
   right: 0;
-  background: #04724d;
   color: white;
   font-weight: bold;
+  animation-name: popup;
+  animation-duration: 0.3s;
+}
+
+@keyframes popup {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .dropdown-item {
@@ -151,6 +154,8 @@ body {
   list-style: none;
   padding: 15px 40px;
   border-top: 1px solid white;
+  border-radius: 5px;
+  background: #04724d;
 }
 
 .dropdown-item:hover {

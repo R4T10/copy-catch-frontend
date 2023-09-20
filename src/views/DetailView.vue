@@ -22,10 +22,10 @@
     >
       <div>
         <div>
-          <h3>{{ compare_data.student_id }} {{ compare_data.student_name }}</h3>
-        </div>
-        <div>
-          <h3>{{ compare_data.percentage }} %</h3>
+          <h3>
+            <span id="percentage">{{ compare_data.percentage }}%</span>
+            {{ compare_data.student_id }} {{ compare_data.student_name }}
+          </h3>
         </div>
         <p>{{ compare_data.answer }}</p>
       </div>
@@ -39,8 +39,10 @@
       :key="compare_data"
     >
       <div>
-        <h3>{{ compare_data.percentage }} %</h3>
-        <h3>{{ compare_data.snippet }}</h3>
+        <h3>
+          <span id="percentage">{{ compare_data.percentage }}%</span>
+          {{ compare_data.snippet }}
+        </h3>
         <a :href="compare_data.link" target="_blank">{{ compare_data.link }}</a>
       </div>
     </div>
@@ -147,5 +149,9 @@ button:hover {
 
 a:hover {
   color: #04724d;
+}
+
+#percentage {
+  color: red;
 }
 </style>
