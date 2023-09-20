@@ -39,6 +39,7 @@
       :key="compare_data"
     >
       <div>
+        <h3>{{ compare_data.percentage }} %</h3>
         <h3>{{ compare_data.snippet }}</h3>
         <a :href="compare_data.link" target="_blank">{{ compare_data.link }}</a>
       </div>

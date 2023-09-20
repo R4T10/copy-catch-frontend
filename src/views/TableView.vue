@@ -139,23 +139,23 @@ export default {
               GStore.result = response.data
               console.log(GStore.result)
               if (response.status === 200) {
-                // ResultService.google_tableResult(GStore.detail.id).then(
-                //   (response) => {
-                // GStore.google_result = response.data
-                // if (response.status === 200) {
-                console.log(GStore.result)
-                StudentService.get_student_list(GStore.detail.id).then(
+                ResultService.google_tableResult(GStore.detail.id).then(
                   (response) => {
-                    GStore.students = response.data
+                    GStore.google_result = response.data
                     if (response.status === 200) {
-                      Swal.hideLoading()
-                      Swal.fire('Compare success', '', 'success')
+                      console.log(GStore.result)
+                      StudentService.get_student_list(GStore.detail.id).then(
+                        (response) => {
+                          GStore.students = response.data
+                          if (response.status === 200) {
+                            Swal.hideLoading()
+                            Swal.fire('Compare success', '', 'success')
+                          }
+                        }
+                      )
                     }
                   }
                 )
-                // }
-                // }
-                // )
               }
             })
             .catch((error) => {
