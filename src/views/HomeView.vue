@@ -3,7 +3,7 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
   />
-  <div class="container">
+  <div class="animate__animated animate__fadeInUp container">
     <h2 class="about_us">ABOUT US</h2>
     <img class="homeimg" src="@/assets/home.jpg" />
     <div class="aboutus">
@@ -54,9 +54,6 @@ export default {
 }
 </script>
 <style scoped>
-body {
-  background: rgb(245, 250, 247);
-}
 .about_us {
   font-size: 50px;
 }
@@ -76,9 +73,8 @@ body {
 .aboutus {
   text-align: justify;
   font-size: 18px;
-  margin-bottom: 20px;
-  padding: 2% 5% 2% 5%;
-  margin: 0% 20% 2% 20%;
+  padding: 2% 5% 5% 5%;
+  margin: 0% 20% 5px 20%;
   background-color: #04724d;
   color: white;
 }
@@ -88,9 +84,11 @@ body {
 }
 
 .feature {
-  padding: 30px 375px;
+  padding: 30px;
   display: flex;
   justify-content: space-between;
+  background: rgb(245, 250, 247);
+  margin: 0 288px;
 }
 
 #circle {
