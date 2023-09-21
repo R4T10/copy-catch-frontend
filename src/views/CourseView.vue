@@ -31,6 +31,7 @@ import Swal from 'sweetalert2'
 import CourseService from '@/services/CourseService'
 import CourseBlog from '@/components/CourseBlog.vue'
 import LoginService from '@/services/LoginService'
+import router from '../router'
 // import GStore from '@/store'
 export default {
   name: 'HomeView',
@@ -210,6 +211,12 @@ export default {
                 this.fetchUserData(access_token)
               } else {
                 console.log('No access_token')
+                if (this.GStore.user == null) {
+                  Swal.close()
+                  router.push({
+                    name: 'home'
+                  })
+                }
               }
             })
           }
