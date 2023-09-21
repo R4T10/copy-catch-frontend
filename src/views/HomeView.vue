@@ -4,26 +4,27 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
   />
   <div class="container">
-    <h2>COPY-CATCH</h2>
+    <h2 class="about_us">ABOUT US</h2>
     <img class="homeimg" src="@/assets/home.jpg" />
     <div class="aboutus">
-      Copy-Catch is a web application to check plagiarism of online exams that
-      are conducted on the KC Moodle, which is a free and open-source learning
+      <h2 class="about_copy">Copy-Catch</h2>
+      is a web application to check plagiarism of online exams that are
+      conducted on the KC Moodle, which is a free and open-source learning
       management system that is used for blended learning, distance education,
       flipped classroom, and other online learning projects at Chiang Mai
       University. Professors will not have difficulties with detecting
       plagiarism and be able to mark exams conveniently regarding plagiarism.
     </div>
   </div>
-  <div class="feature">
+  <div class="animate__animated animate__fadeInLeft feature">
     <div id="circle"><i class="fa fa-copy"></i></div>
     <div id="explain">check plagiarism among students answers</div>
   </div>
-  <div class="feature">
+  <div class="animate__animated animate__fadeInRight feature">
     <div id="explain">check plagiarism with Google search</div>
     <div id="circle"><i class="fa fa-google"></i></div>
   </div>
-  <div class="feature">
+  <div class="animate__animated animate__fadeInLeft feature">
     <div id="circle"><i class="fa fa-envelope"></i></div>
     <div id="explain">
       send email to students to inform <br />
@@ -56,7 +57,13 @@ export default {
 body {
   background: rgb(245, 250, 247);
 }
-
+.about_us {
+  font-size: 50px;
+}
+.about_copy {
+  font-size: 50px;
+  color: white;
+}
 .container {
   position: relative;
   text-align: center;
@@ -70,7 +77,10 @@ body {
   text-align: justify;
   font-size: 18px;
   margin-bottom: 20px;
-  padding: 30px 250px;
+  padding: 2% 5% 2% 5%;
+  margin: 0% 20% 2% 20%;
+  background-color: #04724d;
+  color: white;
 }
 
 #title {
@@ -78,14 +88,14 @@ body {
 }
 
 .feature {
-  padding: 30px 300px;
+  padding: 30px 375px;
   display: flex;
   justify-content: space-between;
 }
 
 #circle {
   border-radius: 50%;
-  background: #04724d;
+  background: #1c499e;
   font-size: 60px;
   color: white;
   width: 150px;
@@ -109,4 +119,5 @@ body {
   align-items: center;
   justify-content: center;
 }
+@import 'animate.css';
 </style>
