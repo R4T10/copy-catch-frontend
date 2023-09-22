@@ -11,11 +11,16 @@
         class="dropdown-item"
         :class="{ 'is-disabled': isDisabled }"
       >
-        {{
-          GStore.user
-            ? GStore.user.firstname_EN + ' ' + GStore.user.lastname_EN
-            : ''
-        }}
+        <div>
+          {{
+            GStore.user
+              ? GStore.user.firstname_EN + ' ' + GStore.user.lastname_EN
+              : ''
+          }}
+        </div>
+        <div>
+          {{ GStore.user.cmuitaccount }}
+        </div>
       </div>
       <div v-if="GStore.user" class="dropdown-item" @click="course">COURSE</div>
       <div v-if="GStore.user" class="dropdown-item" @click="logout">
@@ -88,7 +93,7 @@ body {
   width: 100%;
   height: 80px;
   background: #04724d;
-  margin: 0 0 40px;
+  /* margin: 0 0 40px; */
 }
 
 .logo-icon {
@@ -137,6 +142,7 @@ body {
   font-weight: bold;
   animation-name: popup;
   animation-duration: 0.3s;
+  z-index: 2;
 }
 
 @keyframes popup {

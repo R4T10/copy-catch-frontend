@@ -56,6 +56,7 @@ export default {
 <style scoped>
 .about_us {
   font-size: 50px;
+  z-index: 1;
 }
 .about_copy {
   font-size: 50px;
@@ -68,6 +69,7 @@ export default {
 
 .homeimg {
   width: 60%;
+  z-index: 1;
 }
 
 .aboutus {
@@ -77,6 +79,7 @@ export default {
   margin: 0% 20% 5px 20%;
   background-color: #04724d;
   color: white;
+  z-index: 2;
 }
 
 #title {
