@@ -93,7 +93,6 @@ body {
   width: 100%;
   height: 80px;
   background: #04724d;
-  /* margin: 0 0 40px; */
 }
 
 .logo-icon {
@@ -155,7 +154,6 @@ body {
 }
 
 .dropdown-item {
-  padding: 10px 20px;
   cursor: pointer;
   list-style: none;
   padding: 15px 40px;

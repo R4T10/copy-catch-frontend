@@ -85,6 +85,8 @@ export default {
       const course_id = GStore.detail.course_id
       const course_name = GStore.detail.course_name
       const examination = GStore.detail.examination
+      const question_number =
+        GStore.result.data[rowIndex].answers[index].question
       console.log(name)
       console.log(answer)
       console.log(comparison_data)
@@ -96,6 +98,7 @@ export default {
         answer: answer,
         compare_data: comparison_data,
         question: question,
+        question_number: question_number,
         student_id: student_id,
         course_id: course_id,
         course_name: course_name,

@@ -82,10 +82,6 @@ export default {
   z-index: 2;
 }
 
-#title {
-  font-weight: bold;
-}
-
 .feature {
   padding: 30px;
   display: flex;
