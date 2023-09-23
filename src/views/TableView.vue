@@ -175,6 +175,10 @@ export default {
 }
 </script>
 <style scoped>
+.course {
+  margin: 30px 0 0;
+}
+
 .coursedetail {
   font-size: 20px;
   display: inline;

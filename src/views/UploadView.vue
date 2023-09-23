@@ -3,10 +3,7 @@
     <div class="coursedetail">{{ GStore.detail.course_id }}</div>
     <div class="coursedetail">{{ GStore.detail.course_name }}</div>
     <div class="coursedetail">{{ GStore.detail.year }}</div>
-    <div class="coursedetail">
-      {{ GStore.detail.examination.charAt(0).toUpperCase()
-      }}{{ GStore.detail.examination.slice(1) }}
-    </div>
+    <div class="coursedetail">{{ GStore.detail.examination }}</div>
   </div>
 
   <DragDrop></DragDrop>
@@ -22,7 +19,7 @@ export default {
 </script>
 <style scoped>
 .course {
-  margin-bottom: 30px;
+  margin: 30px 0 ;
 }
 
 .coursedetail {
