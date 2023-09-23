@@ -19,7 +19,7 @@ export default {
 </script>
 <style scoped>
 .course {
-  margin: 30px 0 ;
+  margin: 30px 0;
 }
 
 .coursedetail {
